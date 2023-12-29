@@ -34,7 +34,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Publish (Github Release)
-        if: github.ref = "refs/head/master"
+        if: github.ref == "refs/head/master"
         uses: Kir-Antipov/mc-publish@v3.2                                   #The specified MC-Publish GitHub Action in the version 3.2
         with:
           github-prerelease: false
