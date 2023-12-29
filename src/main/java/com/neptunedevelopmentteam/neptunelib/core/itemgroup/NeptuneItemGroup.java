@@ -57,9 +57,8 @@ public class NeptuneItemGroup {
      * @param  item  the item to be added to the group
      */
     public void addItemToGroup(Item item) {
-        if (!items.contains(item)) {
-            items.add(item);
-        }
+        items.add(item);
+
     }
 
     /**
