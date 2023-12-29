@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/head/master'
     steps:
       - name: Check Environment Variables
         run: env
@@ -34,7 +35,6 @@ jobs:
         run: ./gradlew clean build
 
       - name: Publish (Github Release)
-        if: github.ref == 'refs/head/master'
         uses: Kir-Antipov/mc-publish@v3.2                                   #The specified MC-Publish GitHub Action in the version 3.2
         with:
           github-prerelease: false
