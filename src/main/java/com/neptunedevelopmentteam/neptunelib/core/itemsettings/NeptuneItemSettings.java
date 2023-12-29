@@ -15,10 +15,21 @@ public class NeptuneItemSettings extends FabricItemSettings {
     @Nullable
     private NeptuneItemGroup group = null;
 
+    /**
+     * Sets the group of the NeptuneItemSettings.
+     *
+     * @param  group  the NeptuneItemGroup to set
+     * @return        the updated NeptuneItemSettings
+     */
     public NeptuneItemSettings group(NeptuneItemGroup group) {
         this.group = group;
         return this;
     }
+    /**
+     * Retrieves the NeptuneItemGroup associated with this object.
+     *
+     * @return  the NeptuneItemGroup associated with this object
+     */
     public NeptuneItemGroup group() {
         return this.group;
     }
