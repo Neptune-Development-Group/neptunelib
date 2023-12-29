@@ -13,6 +13,7 @@ public class ItemMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Item.Settings settings, CallbackInfo ci) {
         if (settings instanceof NeptuneItemSettings) {
+            if (((NeptuneItemSettings) settings).group() == null) return;
             ((NeptuneItemSettings) settings).group().addItemToGroup((Item) (Object) this);
         }
     }
