@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "neptunelib",
+  "version": "${version}",
+  "name": "neptunelib",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Timot/neptunelib"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/neptunelib/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.neptunedevelopmentteam.neptunelib.client.NeptunelibClient"
+    ],
+    "main": [
+      "com.neptunedevelopmentteam.neptunelib.Neptunelib"
+    ]
+  },
+  "mixins": [
+    "neptunelib.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
