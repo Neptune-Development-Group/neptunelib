@@ -36,11 +36,11 @@ jobs:
       - name: Publish (Github)
         uses: Kir-Antipov/mc-publish@v3.2                                   #The specified MC-Publish GitHub Action in the version 3.2
         with:
-
+          github-prerelease: false
           github-token: "${{secrets.GITHUB_TOKEN}}"
 
           github-generate-changelog: true
-          version-type: beta
+          version-type: release
 
           loaders: fabric
           java: "${{env.JAVA_VERSION}}"
