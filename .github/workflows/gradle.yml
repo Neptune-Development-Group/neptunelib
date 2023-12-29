@@ -45,22 +45,3 @@ jobs:
 
           loaders: fabric
           java: "${{env.JAVA_VERSION}}"
-      - name: Determine release version
-        id: release_version
-        run: |
-          echo "::set-output name=version::$(if [ '${{ github.ref }}' == 'refs/heads/main' ]; then echo ${{ steps.get_tags.outputs.version }}; else echo 'prerelease-'${{ steps.get_tags.outputs.version }}; fi)"
-      - name: Update gradle.properties for not release
-        run: |
-          sed -i "s/^mod_version=.*/mod_version=${{ steps.release_version.outputs.version }}/" gradle.properties
-      - name: Publish (Github Pre-Release)
-        if: github.ref != 'refs/head/master'
-        uses: Kir-Antipov/mc-publish@v3.2
-        with:
-          github-prerelease: true
-          github-token: "${{secrets.GITHUB_TOKEN}}"
-
-          github-generate-changelog: true
-          version-type: beta
-
-          loaders: fabric
-          java: "${{env.JAVA_VERSION}}"
