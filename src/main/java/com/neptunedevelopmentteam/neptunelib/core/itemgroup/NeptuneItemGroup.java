@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NeptuneItemGroup {
+public class NeptuneItemGroup {
     boolean initialized = false;
     public List<Item> items = new ArrayList<>();
     Identifier id;
