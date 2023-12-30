@@ -24,10 +24,7 @@ import java.util.function.ToIntFunction;
 public class NeptuneBlockSettings extends FabricBlockSettings {
     
     public NeptuneItemSettings item_settings = new NeptuneItemSettings();
-    public BlockEntityType block_entity_type = null;
     public Boolean __has_a_block_item = false;
-    public Boolean __has_a_block_entity = false;
-    public Identifier optional_block_entity_id = null;
     
     public static NeptuneBlockSettings create() {
         return new NeptuneBlockSettings();
@@ -43,31 +40,6 @@ public class NeptuneBlockSettings extends FabricBlockSettings {
     public NeptuneBlockSettings addItemSettings(NeptuneItemSettings item_settings) {
         this.item_settings = item_settings;
         __has_a_block_item = true;
-        return this;
-    }
-
-    /**
-     * Adds a block entity to the NeptuneBlockSettings.
-     *
-     * @param block_entity_type  the block entity type
-     * @return         the updated NeptuneBlockSettings
-     */
-    public NeptuneBlockSettings addBlockEntity(BlockEntityType block_entity_type) {
-        this.block_entity_type = block_entity_type;
-        __has_a_block_entity = true;
-        return this;
-    }
-    /**
-     * Adds a block entity to the NeptuneBlockSettings.
-     *
-     * @param  block_entity_type  the block entity type
-     * @param  id       the identifier for the block entity
-     * @return          the updated NeptuneBlockSettings object
-     */
-    public NeptuneBlockSettings addBlockEntity(BlockEntityType block_entity_type, Identifier id) {
-        __has_a_block_entity = true;
-        this.block_entity_type = block_entity_type;
-        optional_block_entity_id = id;
         return this;
     }
 

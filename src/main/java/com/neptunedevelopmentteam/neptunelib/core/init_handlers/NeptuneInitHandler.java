@@ -72,14 +72,6 @@ public class NeptuneInitHandler {
                         }
                         Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), block_item);
                     }
-                    if (block_settings.__has_a_block_entity) {
-                        BlockEntityType<?> block_entity_type = block_settings.block_entity_type;
-                        if (block_settings.optional_block_entity_id != null) {
-                            Registry.register(Registries.BLOCK_ENTITY_TYPE, block_settings.optional_block_entity_id, block_entity_type);
-                        } else {
-                            Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(namespace, field_name_fixed), block_entity_type);
-                        }
-                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -93,6 +85,19 @@ public class NeptuneInitHandler {
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
                     Registry.register(Registries.SOUND_EVENT, new Identifier(namespace, field_name_fixed), soundEvent);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (field.getType() == BlockEntityType.class) {
+                try {
+                    BlockEntityType blockEntityType = (BlockEntityType) field.get(null);
+                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
+                    if (field.isAnnotationPresent(CustomName.class)) {
+                        CustomName customName = field.getAnnotation(CustomName.class);
+                        field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
+                    }
+                    Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(namespace, field_name_fixed), blockEntityType);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
