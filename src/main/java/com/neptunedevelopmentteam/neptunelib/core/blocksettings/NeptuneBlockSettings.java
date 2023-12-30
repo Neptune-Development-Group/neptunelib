@@ -1,7 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.core.blocksettings;
 
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
-import com.neptunedevelopmentteam.neptunelib.test.BlockInit;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
