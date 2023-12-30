@@ -18,9 +18,6 @@ public class ItemMixin implements ForcedItemSettings {
     public void init(Item.Settings settings, CallbackInfo ci) {
         if (settings instanceof NeptuneItemSettings) {
             neptuneItemSettings = (NeptuneItemSettings) settings;
-            if (neptuneItemSettings.group() == null) return;
-            if (neptuneItemSettings.group().items.contains((Item) (Object) this)) return;
-            neptuneItemSettings.group().__addItemToGroup((Item) (Object) this);
         }
     }
 

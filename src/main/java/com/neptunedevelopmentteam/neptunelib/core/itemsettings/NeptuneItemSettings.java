@@ -10,10 +10,12 @@ import net.minecraft.resource.featuretoggle.FeatureFlag;
 import net.minecraft.util.Rarity;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public class NeptuneItemSettings extends FabricItemSettings {
 
     @Nullable
-    private NeptuneItemGroup group = null;
+    private Supplier<NeptuneItemGroup> group = null;
 
     /**
      * Sets the group of the NeptuneItemSettings.
@@ -21,7 +23,7 @@ public class NeptuneItemSettings extends FabricItemSettings {
      * @param  group  the NeptuneItemGroup to set
      * @return        the updated NeptuneItemSettings
      */
-    public NeptuneItemSettings group(NeptuneItemGroup group) {
+    public NeptuneItemSettings group(Supplier<NeptuneItemGroup> group) {
         this.group = group;
         return this;
     }
@@ -30,7 +32,7 @@ public class NeptuneItemSettings extends FabricItemSettings {
      *
      * @return  the NeptuneItemGroup associated with this object
      */
-    public NeptuneItemGroup group() {
+    public Supplier<NeptuneItemGroup> group() {
         return this.group;
     }
 

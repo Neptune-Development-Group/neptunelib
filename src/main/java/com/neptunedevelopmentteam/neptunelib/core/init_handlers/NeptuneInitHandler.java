@@ -37,7 +37,7 @@ public class NeptuneInitHandler {
                     }
                     NeptuneItemSettings item_settings = ((ForcedItemSettings) item).neptunelib$getSettings();
                     if (item_settings.group() != null) {
-                        NeptuneItemGroup group = item_settings.group();
+                        NeptuneItemGroup group = item_settings.group().get();
                         if (!group.items.contains(item)) {
                             group.__addItemToGroup(item);
                         }
@@ -62,7 +62,7 @@ public class NeptuneInitHandler {
 
                         Item block_item = new BlockItem(block, item_settings);
                         if (item_settings.group() != null) {
-                            NeptuneItemGroup group = item_settings.group();
+                            NeptuneItemGroup group = item_settings.group().get();
                             if (!group.items.contains(block_item)) {
                                 group.__addItemToGroup(block_item);
                             }
