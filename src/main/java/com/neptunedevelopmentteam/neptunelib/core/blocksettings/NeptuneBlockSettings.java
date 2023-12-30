@@ -2,10 +2,12 @@ package com.neptunedevelopmentteam.neptunelib.core.blocksettings;
 
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.EntityType;
@@ -21,7 +23,10 @@ import java.util.function.ToIntFunction;
 public class NeptuneBlockSettings extends FabricBlockSettings {
     
     public NeptuneItemSettings item_settings = new NeptuneItemSettings();
+    public FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> block_entity_factory = null;
     public Boolean __has_a_block_item = false;
+    public Boolean __has_a_block_entity = false;
+    public Identifier optional_block_entity_id = null;
     
     public static NeptuneBlockSettings create() {
         return new NeptuneBlockSettings();
@@ -30,6 +35,18 @@ public class NeptuneBlockSettings extends FabricBlockSettings {
     public NeptuneBlockSettings addItemSettings(NeptuneItemSettings item_settings) {
         this.item_settings = item_settings;
         __has_a_block_item = true;
+        return this;
+    }
+
+    public NeptuneBlockSettings addBlockEntity(FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> factory) {
+        __has_a_block_entity = true;
+        block_entity_factory = factory;
+        return this;
+    }
+    public NeptuneBlockSettings addBlockEntity(FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> factory, Identifier id) {
+        __has_a_block_entity = true;
+        block_entity_factory = factory;
+        optional_block_entity_id = id;
         return this;
     }
 

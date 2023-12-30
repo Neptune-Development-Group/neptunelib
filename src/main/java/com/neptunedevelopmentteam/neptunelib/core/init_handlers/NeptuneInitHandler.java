@@ -5,11 +5,14 @@ import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedBlockSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Field;
@@ -69,6 +72,27 @@ public class NeptuneInitHandler {
                         }
                         Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), block_item);
                     }
+                    if (block_settings.__has_a_block_entity) {
+                        BlockEntityType<?> block_entity_type = FabricBlockEntityTypeBuilder.create(block_settings.block_entity_factory, block).build();
+                        if (block_settings.optional_block_entity_id != null) {
+                            Registry.register(Registries.BLOCK_ENTITY_TYPE, block_settings.optional_block_entity_id, block_entity_type);
+                        } else {
+                            Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(namespace, field_name_fixed), block_entity_type);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (field.getType() == SoundEvent.class) {
+                try {
+                    SoundEvent soundEvent = (SoundEvent) field.get(null);
+                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
+                    if (field.isAnnotationPresent(CustomName.class)) {
+                        CustomName customName = field.getAnnotation(CustomName.class);
+                        field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
+                    }
+                    Registry.register(Registries.SOUND_EVENT, new Identifier(namespace, field_name_fixed), soundEvent);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
