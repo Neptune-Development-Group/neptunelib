@@ -1,7 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
-import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -11,11 +10,9 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
-public class InitHandler {
+public class NeptuneInitHandler {
 
     /**
      * Registers all fields of the given class that are of type Item or Block into the specified namespace.
@@ -30,7 +27,7 @@ public class InitHandler {
             if (field.getType() == Item.class) {
                 try {
                     Item item = (Item) field.get(null);
-                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT).replace("_", "");
+                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
                     Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), item);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -40,7 +37,7 @@ public class InitHandler {
                 try {
                     Block block = (Block) field.get(null);
                     NeptuneBlockSettings block_settings = ((ForcedBlockSettings) block).neptunelib$getSettings();
-                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT).replace("_", "");
+                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
                     Registry.register(Registries.BLOCK, new Identifier(namespace, field_name_fixed), block);
                     if (block_settings.__has_a_block_item) {
                         Item block_item = new BlockItem(block, block_settings.item_settings);
