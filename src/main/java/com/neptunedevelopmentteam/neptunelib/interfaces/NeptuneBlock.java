@@ -9,6 +9,4 @@ import java.util.function.Supplier;
 public interface NeptuneBlock {
 
     NeptuneBlockSettings neptunelib$getSettings();
-    Supplier<BlockEntityType<? extends BlockEntity>> neptunelib$getBlockEntityType();
-    void neptunelib$setBlockEntityType (Supplier<BlockEntityType<? extends BlockEntity>> blockEntityType);
 }

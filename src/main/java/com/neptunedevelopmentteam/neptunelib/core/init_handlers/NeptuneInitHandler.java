@@ -73,8 +73,7 @@ public class NeptuneInitHandler {
                         Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), block_item);
                     }
                     if (block_settings.__has_a_block_entity) {
-                        BlockEntityType<?> block_entity_type = FabricBlockEntityTypeBuilder.create(block_settings.block_entity_factory, block).build();
-                        ((NeptuneBlock) block).neptunelib$setBlockEntityType(() -> block_entity_type);
+                        BlockEntityType<?> block_entity_type = block_settings.block_entity_type;
                         if (block_settings.optional_block_entity_id != null) {
                             Registry.register(Registries.BLOCK_ENTITY_TYPE, block_settings.optional_block_entity_id, block_entity_type);
                         } else {

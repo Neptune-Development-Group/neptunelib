@@ -7,7 +7,4 @@ import net.minecraft.block.entity.BlockEntityType;
 
 public class NeptuneUtil {
 
-    public static BlockEntityType<? extends BlockEntity> getBlockEntityTypeForBlock(Block block) {
-        return ((NeptuneBlock) block).neptunelib$getBlockEntityType().get();
-    }
 }

@@ -35,14 +35,4 @@ public class BlockMixin implements NeptuneBlock {
         return this.neptuneBlockSettings;
     }
 
-    @Override
-    public Supplier<BlockEntityType<? extends BlockEntity>> neptunelib$getBlockEntityType() {
-        return this.blockEntityType;
-    }
-
-    @Override
-    public void neptunelib$setBlockEntityType(Supplier<BlockEntityType<? extends BlockEntity>> blockEntityType) {
-        this.blockEntityType = blockEntityType;
-    }
-
 }

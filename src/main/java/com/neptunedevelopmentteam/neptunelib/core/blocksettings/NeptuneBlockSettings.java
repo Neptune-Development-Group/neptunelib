@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.EntityType;
@@ -23,7 +24,7 @@ import java.util.function.ToIntFunction;
 public class NeptuneBlockSettings extends FabricBlockSettings {
     
     public NeptuneItemSettings item_settings = new NeptuneItemSettings();
-    public FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> block_entity_factory = null;
+    public BlockEntityType block_entity_type = null;
     public Boolean __has_a_block_item = false;
     public Boolean __has_a_block_entity = false;
     public Identifier optional_block_entity_id = null;
@@ -48,24 +49,24 @@ public class NeptuneBlockSettings extends FabricBlockSettings {
     /**
      * Adds a block entity to the NeptuneBlockSettings.
      *
-     * @param factory  the factory used to create the block entity
+     * @param block_entity_type  the block entity type
      * @return         the updated NeptuneBlockSettings
      */
-    public NeptuneBlockSettings addBlockEntity(FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> factory) {
+    public NeptuneBlockSettings addBlockEntity(BlockEntityType block_entity_type) {
+        this.block_entity_type = block_entity_type;
         __has_a_block_entity = true;
-        block_entity_factory = factory;
         return this;
     }
     /**
      * Adds a block entity to the NeptuneBlockSettings.
      *
-     * @param  factory  a factory for creating the block entity
+     * @param  block_entity_type  the block entity type
      * @param  id       the identifier for the block entity
      * @return          the updated NeptuneBlockSettings object
      */
-    public NeptuneBlockSettings addBlockEntity(FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> factory, Identifier id) {
+    public NeptuneBlockSettings addBlockEntity(BlockEntityType block_entity_type, Identifier id) {
         __has_a_block_entity = true;
-        block_entity_factory = factory;
+        this.block_entity_type = block_entity_type;
         optional_block_entity_id = id;
         return this;
     }
