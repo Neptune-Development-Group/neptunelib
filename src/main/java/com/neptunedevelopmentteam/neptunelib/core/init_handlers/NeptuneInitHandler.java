@@ -1,7 +1,10 @@
 package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
+import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
+import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedBlockSettings;
+import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -32,6 +35,13 @@ public class NeptuneInitHandler {
                         CustomName customName = field.getAnnotation(CustomName.class);
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
+                    NeptuneItemSettings item_settings = ((ForcedItemSettings) item).neptunelib$getSettings();
+                    if (item_settings.group() != null) {
+                        NeptuneItemGroup group = item_settings.group();
+                        if (!group.items.contains(item)) {
+                            group.__addItemToGroup(item);
+                        }
+                    }
                     Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), item);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -48,7 +58,15 @@ public class NeptuneInitHandler {
                     }
                     Registry.register(Registries.BLOCK, new Identifier(namespace, field_name_fixed), block);
                     if (block_settings.__has_a_block_item) {
-                        Item block_item = new BlockItem(block, block_settings.item_settings);
+                        NeptuneItemSettings item_settings = block_settings.item_settings;
+
+                        Item block_item = new BlockItem(block, item_settings);
+                        if (item_settings.group() != null) {
+                            NeptuneItemGroup group = item_settings.group();
+                            if (!group.items.contains(block_item)) {
+                                group.__addItemToGroup(block_item);
+                            }
+                        }
                         Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), block_item);
                     }
                 } catch (IllegalAccessException e) {

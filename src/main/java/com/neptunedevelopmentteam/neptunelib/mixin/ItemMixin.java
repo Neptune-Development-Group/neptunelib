@@ -1,20 +1,31 @@
 package com.neptunedevelopmentteam.neptunelib.mixin;
 
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
+import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedItemSettings;
 import net.minecraft.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Item.class)
-public class ItemMixin {
+public class ItemMixin implements ForcedItemSettings {
+    @Unique
+    NeptuneItemSettings neptuneItemSettings;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Item.Settings settings, CallbackInfo ci) {
         if (settings instanceof NeptuneItemSettings) {
-            if (((NeptuneItemSettings) settings).group() == null) return;
-            ((NeptuneItemSettings) settings).group().__addItemToGroup((Item) (Object) this);
+            neptuneItemSettings = (NeptuneItemSettings) settings;
+            if (neptuneItemSettings.group() == null) return;
+            if (neptuneItemSettings.group().items.contains((Item) (Object) this)) return;
+            neptuneItemSettings.group().__addItemToGroup((Item) (Object) this);
         }
+    }
+
+    @Override
+    public NeptuneItemSettings neptunelib$getSettings() {
+        return neptuneItemSettings;
     }
 }
