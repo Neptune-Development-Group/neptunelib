@@ -1,6 +1,5 @@
 package com.neptunedevelopmentteam.neptunelib.core.itemgroup;
 
-import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -12,7 +11,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class NeptuneItemGroup {
     boolean initialized = false;
@@ -56,7 +54,7 @@ public class NeptuneItemGroup {
      *
      * @param  item  the item to be added to the group
      */
-    public void addItemToGroup(Item item) {
+    public void __addItemToGroup(Item item) {
         items.add(item);
 
     }

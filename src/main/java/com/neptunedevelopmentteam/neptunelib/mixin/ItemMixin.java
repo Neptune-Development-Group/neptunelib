@@ -14,7 +14,7 @@ public class ItemMixin {
     public void init(Item.Settings settings, CallbackInfo ci) {
         if (settings instanceof NeptuneItemSettings) {
             if (((NeptuneItemSettings) settings).group() == null) return;
-            ((NeptuneItemSettings) settings).group().addItemToGroup((Item) (Object) this);
+            ((NeptuneItemSettings) settings).group().__addItemToGroup((Item) (Object) this);
         }
     }
 }
