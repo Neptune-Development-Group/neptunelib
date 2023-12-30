@@ -55,6 +55,7 @@ public class NeptuneItemGroup {
      * @param  item  the item to be added to the group
      */
     public void __addItemToGroup(Item item) {
+        System.out.println("Added item to group");
         items.add(item);
 
     }
