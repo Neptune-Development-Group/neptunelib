@@ -8,6 +8,7 @@ import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneItem;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -98,6 +99,19 @@ public class NeptuneInitHandler {
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
                     Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(namespace, field_name_fixed), blockEntityType);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (field.getType() == EntityType.class) {
+                try {
+                    EntityType entityType = (EntityType) field.get(null);
+                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
+                    if (field.isAnnotationPresent(CustomName.class)) {
+                        CustomName customName = field.getAnnotation(CustomName.class);
+                        field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
+                    }
+                    Registry.register(Registries.ENTITY_TYPE, new Identifier(namespace, field_name_fixed), entityType);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
