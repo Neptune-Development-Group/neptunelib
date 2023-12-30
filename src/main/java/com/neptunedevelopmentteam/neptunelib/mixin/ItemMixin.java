@@ -1,7 +1,7 @@
 package com.neptunedevelopmentteam.neptunelib.mixin;
 
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
-import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedItemSettings;
+import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneItem;
 import net.minecraft.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Item.class)
-public class ItemMixin implements ForcedItemSettings {
+public class ItemMixin implements NeptuneItem {
     @Unique
     NeptuneItemSettings neptuneItemSettings;
 

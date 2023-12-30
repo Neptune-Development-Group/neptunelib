@@ -3,8 +3,8 @@ package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
-import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedBlockSettings;
-import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedItemSettings;
+import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneBlock;
+import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneItem;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
@@ -38,7 +38,7 @@ public class NeptuneInitHandler {
                         CustomName customName = field.getAnnotation(CustomName.class);
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
-                    NeptuneItemSettings item_settings = ((ForcedItemSettings) item).neptunelib$getSettings();
+                    NeptuneItemSettings item_settings = ((NeptuneItem) item).neptunelib$getSettings();
                     if (item_settings.group() != null) {
                         NeptuneItemGroup group = item_settings.group().get();
                         if (!group.items.contains(item)) {
@@ -53,7 +53,7 @@ public class NeptuneInitHandler {
             else if (field.getType() == Block.class) {
                 try {
                     Block block = (Block) field.get(null);
-                    NeptuneBlockSettings block_settings = ((ForcedBlockSettings) block).neptunelib$getSettings();
+                    NeptuneBlockSettings block_settings = ((NeptuneBlock) block).neptunelib$getSettings();
                     String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
                     if (field.isAnnotationPresent(CustomName.class)) {
                         CustomName customName = field.getAnnotation(CustomName.class);
@@ -74,6 +74,7 @@ public class NeptuneInitHandler {
                     }
                     if (block_settings.__has_a_block_entity) {
                         BlockEntityType<?> block_entity_type = FabricBlockEntityTypeBuilder.create(block_settings.block_entity_factory, block).build();
+                        ((NeptuneBlock) block).neptunelib$setBlockEntityType(() -> block_entity_type);
                         if (block_settings.optional_block_entity_id != null) {
                             Registry.register(Registries.BLOCK_ENTITY_TYPE, block_settings.optional_block_entity_id, block_entity_type);
                         } else {

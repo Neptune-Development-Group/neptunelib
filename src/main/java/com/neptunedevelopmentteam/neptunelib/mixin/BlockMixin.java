@@ -1,20 +1,27 @@
 package com.neptunedevelopmentteam.neptunelib.mixin;
 
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
-import com.neptunedevelopmentteam.neptunelib.interfaces.ForcedBlockSettings;
+import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.function.Supplier;
+
 @Mixin(Block.class)
-public class BlockMixin implements ForcedBlockSettings {
+public class BlockMixin implements NeptuneBlock {
 
     @Unique
     NeptuneBlockSettings neptuneBlockSettings;
+
+    @Unique
+    Supplier<BlockEntityType<? extends BlockEntity>> blockEntityType;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(AbstractBlock.Settings settings, CallbackInfo ci) {
@@ -27,4 +34,15 @@ public class BlockMixin implements ForcedBlockSettings {
     public NeptuneBlockSettings neptunelib$getSettings() {
         return this.neptuneBlockSettings;
     }
+
+    @Override
+    public Supplier<BlockEntityType<? extends BlockEntity>> neptunelib$getBlockEntityType() {
+        return this.blockEntityType;
+    }
+
+    @Override
+    public void neptunelib$setBlockEntityType(Supplier<BlockEntityType<? extends BlockEntity>> blockEntityType) {
+        this.blockEntityType = blockEntityType;
+    }
+
 }

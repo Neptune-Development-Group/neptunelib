@@ -32,17 +32,37 @@ public class NeptuneBlockSettings extends FabricBlockSettings {
         return new NeptuneBlockSettings();
     }
 
+    /**
+     * Adds an item setting to the Neptune block settings.
+     *
+     * @param  item_settings  the item settings to be added
+     * @return                the updated Neptune block settings
+     */
+
     public NeptuneBlockSettings addItemSettings(NeptuneItemSettings item_settings) {
         this.item_settings = item_settings;
         __has_a_block_item = true;
         return this;
     }
 
+    /**
+     * Adds a block entity to the NeptuneBlockSettings.
+     *
+     * @param factory  the factory used to create the block entity
+     * @return         the updated NeptuneBlockSettings
+     */
     public NeptuneBlockSettings addBlockEntity(FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> factory) {
         __has_a_block_entity = true;
         block_entity_factory = factory;
         return this;
     }
+    /**
+     * Adds a block entity to the NeptuneBlockSettings.
+     *
+     * @param  factory  a factory for creating the block entity
+     * @param  id       the identifier for the block entity
+     * @return          the updated NeptuneBlockSettings object
+     */
     public NeptuneBlockSettings addBlockEntity(FabricBlockEntityTypeBuilder.Factory<? extends BlockEntity> factory, Identifier id) {
         __has_a_block_entity = true;
         block_entity_factory = factory;
