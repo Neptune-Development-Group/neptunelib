@@ -28,6 +28,10 @@ public class NeptuneInitHandler {
                 try {
                     Item item = (Item) field.get(null);
                     String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
+                    if (field.isAnnotationPresent(CustomName.class)) {
+                        CustomName customName = field.getAnnotation(CustomName.class);
+                        field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
+                    }
                     Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), item);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -38,6 +42,10 @@ public class NeptuneInitHandler {
                     Block block = (Block) field.get(null);
                     NeptuneBlockSettings block_settings = ((ForcedBlockSettings) block).neptunelib$getSettings();
                     String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
+                    if (field.isAnnotationPresent(CustomName.class)) {
+                        CustomName customName = field.getAnnotation(CustomName.class);
+                        field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
+                    }
                     Registry.register(Registries.BLOCK, new Identifier(namespace, field_name_fixed), block);
                     if (block_settings.__has_a_block_item) {
                         Item block_item = new BlockItem(block, block_settings.item_settings);
