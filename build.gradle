@@ -7,6 +7,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+    maven { url 'https://jitpack.io' }
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -46,8 +47,9 @@ processResources {
 tasks.withType(JavaCompile).each {
     it.options.compilerArgs.add('--enable-preview')
 }
-
-def targetJavaVersion = 17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
+def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly

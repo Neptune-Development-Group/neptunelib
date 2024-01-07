@@ -7,7 +7,6 @@ public class Neptunelib implements ModInitializer {
     @Override
     public void onInitialize() {
         System.out.println("Hello World from NeptuneLib!");
-        NeptuneGUI test = new NeptuneGUI();
-        test.test();
+
     }
 }
