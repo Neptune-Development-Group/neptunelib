@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Publish (Github Release)
-        uses: Kir-Antipov/mc-publish@v3.2                                   #The specified MC-Publish GitHub Action in the version 3.2
+        uses: Kir-Antipov/mc-publish@v3.3                                   #The specified MC-Publish GitHub Action in the version 3.3
         with:
           github-prerelease: false
           github-token: "${{secrets.GITHUB_TOKEN}}"
