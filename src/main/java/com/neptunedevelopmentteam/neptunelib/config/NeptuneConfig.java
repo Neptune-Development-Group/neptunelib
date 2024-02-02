@@ -77,6 +77,7 @@ public class NeptuneConfig {
             }
             if (!NeptuneSerializationUtil.isSupportedClass(field.getType())) continue;
             String comment = field.getAnnotation(ConfigComment.class) != null ? field.getAnnotation(ConfigComment.class).value() : "";
+            comment = comment.replace("\n", "");
             String value = NeptuneYaml.getYamlReadyString(NeptuneSerializationUtil.getSerializedValue(field.get(parent_object)), comment);
             if (value.isEmpty()) continue;
             save_values.put(name, value);
