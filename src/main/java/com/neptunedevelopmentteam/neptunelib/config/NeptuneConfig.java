@@ -89,6 +89,7 @@ public class NeptuneConfig {
         return save_values;
     }
     private void loadConfig(File config_file) {
+        System.out.println("Loading config");
         if (this.loaded_config_yaml == null) {
             this.loaded_config_yaml = new NeptuneYaml(config_file);
         }

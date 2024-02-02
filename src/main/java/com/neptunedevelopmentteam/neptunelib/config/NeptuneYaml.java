@@ -63,7 +63,7 @@ public class NeptuneYaml {
         for (String line : lines) {
             if (Objects.equals(line, "\n")) continue;
             String simple_key_regex = "^[\\w\\s]*";
-            String simple_value_regex = "'[\\w\\s.]*'";
+            String simple_value_regex = "\"[^\"]*\"";
             Pattern pattern = Pattern.compile(simple_key_regex);
             Matcher matcher = pattern.matcher(line);
             if (!matcher.find()) continue;
@@ -116,6 +116,10 @@ public class NeptuneYaml {
                 }
                 else if (simple_key_tab_count == last_category_tab_count) {
                     String key_without_tabs = simple_key.substring(simple_key.lastIndexOf("\t") + 1);
+                    if (!last_category_path.contains(".")) {
+                        yaml_values.put(last_category_path + "." + key_without_tabs, simple_value.substring(1, simple_value.length() - 1));
+                        continue;
+                    }
                     last_category_path = last_category_path.substring(0, last_category_path.indexOf(".")); // steps back a path
                     String key = last_category_path + "." + key_without_tabs;
                     yaml_values.put(key, simple_value.substring(1, simple_value.length() - 1));
@@ -124,6 +128,9 @@ public class NeptuneYaml {
                     String key_without_tabs = simple_key.substring(simple_key.lastIndexOf("\t") + 1);
                     int difference_in_tab_count = last_category_tab_count - simple_key_tab_count;
                     for (int i = 0; i < difference_in_tab_count + 1; i++) {
+                        if (!last_category_path.contains(".")) {
+                            continue;
+                        }
                         last_category_path = last_category_path.substring(0, last_category_path.indexOf("."));
                     }
                     String key = last_category_path + "." + key_without_tabs;
@@ -180,7 +187,7 @@ public class NeptuneYaml {
     private String getYamlLine(String key, String value) {
         int group_counts = key.split("\\.").length;
         if (group_counts >= 1) group_counts -= 1;
-        if (!value.contains("'")) value = getYamlReadyString(value);
+        if (!value.contains("\"")) value = getYamlReadyString(value);
         String key_string = key.substring(key.lastIndexOf(".") + 1);
         return "\t".repeat(group_counts) + key_string + ": " + value + "\n";
     }
@@ -193,7 +200,7 @@ public class NeptuneYaml {
     }
 
     public static String getYamlReadyString(String value, String comment) {
-        return (comment.isEmpty() ? "'" + value + "'" : "'" + value + "' # " + comment);
+        return (comment.isEmpty() ? "\"" + value + "\"" : "\"" + value + "\" # " + comment);
     }
 
     public static String getYamlReadyString(String value) {
