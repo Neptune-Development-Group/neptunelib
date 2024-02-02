@@ -1,5 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.config;
 
+import com.neptunedevelopmentteam.neptunelib.Neptunelib;
 import com.neptunedevelopmentteam.neptunelib.core.init_handlers.CustomName;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -77,6 +78,9 @@ public class NeptuneConfig {
             }
             if (!NeptuneSerializationUtil.isSupportedClass(field.getType())) continue;
             String comment = field.getAnnotation(ConfigComment.class) != null ? field.getAnnotation(ConfigComment.class).value() : "";
+            if (comment.contains("\n")) {
+                Neptunelib.LOGGER.warn("Attempted to use newline in comment for " + name + " in " + parent_object.getClass().getName());
+            }
             comment = comment.replace("\n", "");
             String value = NeptuneYaml.getYamlReadyString(NeptuneSerializationUtil.getSerializedValue(field.get(parent_object)), comment);
             if (value.isEmpty()) continue;
