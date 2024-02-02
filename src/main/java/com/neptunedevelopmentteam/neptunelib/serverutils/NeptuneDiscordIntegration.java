@@ -171,6 +171,8 @@ public class NeptuneDiscordIntegration {
     public static void onIngameConsoleMessage(Text message) {
         if (!checkIfAllowedToRun()) return;
         if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CONSOLE_CHANNEL == 0L && binded_minecraft_console_channel == null) return;
+        String message_string = message.getString();
+        // @TODO: Add a fix for people being able to use @everyone and @here ingame
         binded_minecraft_console_channel.sendMessage(message.getString());
     }
 
