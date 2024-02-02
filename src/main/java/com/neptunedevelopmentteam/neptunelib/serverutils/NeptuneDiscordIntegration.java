@@ -14,8 +14,11 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.channel.ServerChannel;
 import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.intent.Intent;
+import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageFlag;
+import org.javacord.api.entity.message.WebhookMessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.message.mention.AllowedMentions;
 import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.entity.user.UserStatus;
 import org.javacord.api.entity.webhook.Webhook;
@@ -103,9 +106,19 @@ public class NeptuneDiscordIntegration {
         try {
             URL url = new URL(url_string);
             if (binded_minecraft_chat_webhook.asIncomingWebhook().isEmpty()) return;
-            binded_minecraft_chat_webhook.asIncomingWebhook().get().sendMessage(message.getString(), sender.getName().getString(), url);
+            new WebhookMessageBuilder()
+                    .append(message.getString())
+                    .setDisplayName(sender.getName().getString())
+                    .setDisplayAvatar(url)
+                    .setAllowedMentions((AllowedMentions) Collections.emptyList())
+                    .send(binded_minecraft_chat_webhook.asIncomingWebhook().get());
         } catch (Exception e) {
-            binded_minecraft_chat_webhook.asIncomingWebhook().get().sendMessage(message.getString(), sender.getName().getString(), (URL) null);
+            if (binded_minecraft_chat_webhook.asIncomingWebhook().isEmpty()) return;
+            new WebhookMessageBuilder()
+                    .append(message.getString())
+                    .setDisplayName(sender.getName().getString())
+                    .setAllowedMentions((AllowedMentions) Collections.emptyList())
+                    .send(binded_minecraft_chat_webhook.asIncomingWebhook().get());
         }
     }
 
