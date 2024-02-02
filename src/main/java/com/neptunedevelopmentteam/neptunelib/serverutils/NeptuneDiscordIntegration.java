@@ -38,7 +38,9 @@ public class NeptuneDiscordIntegration {
     private static boolean initialized = false;
 
     private static SlashCommand bindChannelToMinecraftChatCommand;
+    private static SlashCommand bindChannelToMinecraftConsoleCommand;
     private static ServerTextChannel binded_minecraft_chat_channel;
+    private static ServerTextChannel binded_minecraft_console_channel;
     private static Webhook binded_minecraft_chat_webhook = null;
     private static MinecraftServer game_server;
 
@@ -71,6 +73,20 @@ public class NeptuneDiscordIntegration {
         }
         binded_minecraft_chat_channel = optional_text_channel.get();
         api.addMessageCreateListener(NeptuneDiscordIntegration::messageEventHandler);
+
+
+        if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CONSOLE_CHANNEL == 0L) {
+            Neptunelib.LOGGER.error("INVALID CHANNEL ID SET IN CONFIG!");
+            initialized = true;
+            return;
+        }
+        optional_text_channel = api.getServerTextChannelById(Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CONSOLE_CHANNEL);
+        if (optional_text_channel.isEmpty()) {
+            Neptunelib.LOGGER.error("INVALID CHANNEL ID SET IN CONFIG!");
+            initialized = true;
+            return;
+        }
+        binded_minecraft_console_channel = optional_text_channel.get();
         initialized = true;
     }
 
@@ -113,8 +129,27 @@ public class NeptuneDiscordIntegration {
         binded_minecraft_chat_channel.sendMessage(embed);
     }
 
+    public static void onServerStarted() {
+        if (!checkIfAllowedToRun()) return;
+        if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CHAT_CHANNEL == 0L && binded_minecraft_chat_channel == null) return;
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Server started!")
+                .setColor(Color.GREEN);
+        binded_minecraft_chat_channel.sendMessage(embed);
+    }
+
+    public static void onServerStopped() {
+        if (!checkIfAllowedToRun()) return;
+        if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CHAT_CHANNEL == 0L && binded_minecraft_chat_channel == null) return;
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Server stopped!")
+                .setColor(Color.RED);
+        binded_minecraft_chat_channel.sendMessage(embed);
+    }
+
     private static void setupCommands() {
         setupBindChannelToMinecraftChatCommand();
+        setupBindChannelToMinecraftConsoleCommand();
     }
 
     private static void messageEventHandler(MessageCreateEvent event) {
@@ -123,11 +158,20 @@ public class NeptuneDiscordIntegration {
         if (event.getMessageAuthor().isBotUser()) return;
         if (event.getChannel().asServerTextChannel().get().getId() == binded_minecraft_chat_channel.getId()) {
             Text discord_prefix = Text.literal("[DISCORD] ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")));
-            Text username = Text.literal("<" + event.getMessageAuthor().getDiscriminatedName() + "> ");
+            Text username = Text.literal("<" + event.getMessageAuthor().getDisplayName() + "> ");
             Text message = Text.literal(event.getMessageContent());
             Text final_message = Text.literal("").append(discord_prefix).append(username).append(message);
             game_server.getPlayerManager().broadcast(final_message, false);
         }
+        else if (event.getChannel().asServerTextChannel().get().getId() == binded_minecraft_console_channel.getId()) {
+            game_server.getCommandManager().executeWithPrefix(game_server.getCommandSource(), event.getMessageContent());
+        }
+    }
+
+    public static void onIngameConsoleMessage(Text message) {
+        if (!checkIfAllowedToRun()) return;
+        if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CONSOLE_CHANNEL == 0L && binded_minecraft_console_channel == null) return;
+        binded_minecraft_console_channel.sendMessage(message.getString());
     }
 
     private static void slashCommandEventHandler(SlashCommandCreateEvent event) {
@@ -157,10 +201,46 @@ public class NeptuneDiscordIntegration {
                     .setFlags(MessageFlag.EPHEMERAL)
                     .respond();
         }
+        else if (slashCommandInteraction.getCommandId() == bindChannelToMinecraftConsoleCommand.getId()) {
+            Optional<SlashCommandInteractionOption> optional_channel_option = slashCommandInteraction.getOptionByName("channel");
+            if (optional_channel_option.isEmpty()) return;
+            SlashCommandInteractionOption channel_option = optional_channel_option.get();
+            Optional<ServerChannel> optional_channel = channel_option.getChannelValue();
+            if (optional_channel.isEmpty()) return;
+            ServerChannel channel = optional_channel.get();
+            var temp = channel.asServerTextChannel();
+            if (temp.isEmpty()) {
+                Neptunelib.LOGGER.error("INVALID CHANNEL ID SET FROM COMMAND");
+                slashCommandInteraction
+                        .createImmediateResponder()
+                        .setContent("Invalid channel")
+                        .setFlags(MessageFlag.EPHEMERAL)
+                        .respond();
+                return;
+            }
+            binded_minecraft_console_channel = temp.get();
+            Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CONSOLE_CHANNEL = channel.getId();
+            slashCommandInteraction
+                    .createImmediateResponder()
+                    .setContent("You've set the minecraft console channel to " + channel.getName() + "!")
+                    .setFlags(MessageFlag.EPHEMERAL)
+                    .respond();
+        }
     }
 
     private static void setupBindChannelToMinecraftChatCommand() {
         bindChannelToMinecraftChatCommand = SlashCommand.with("bind_channel_to_minecraft_chat", "Binds a channel to the minecraft chat",
+                Collections.singletonList(
+                        SlashCommandOption.create(SlashCommandOptionType.CHANNEL, "channel", "The channel to bind", true)
+                ))
+                .setDefaultEnabledForPermissions(PermissionType.ADMINISTRATOR)
+                .setEnabledInDms(false)
+                .createGlobal(api)
+                .join();
+    }
+
+    private static void setupBindChannelToMinecraftConsoleCommand() {
+        bindChannelToMinecraftConsoleCommand = SlashCommand.with("bind_channel_to_minecraft_console", "Binds a channel to the minecraft console",
                 Collections.singletonList(
                         SlashCommandOption.create(SlashCommandOptionType.CHANNEL, "channel", "The channel to bind", true)
                 ))

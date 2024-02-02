@@ -29,5 +29,8 @@ public class __NeptuneConfig extends NeptuneConfig {
 
         @ConfigComment("The channel id of the minecraft chat channel, this isn't to be changed unless you know what you're doing, use the command inside discord with the bot to change this")
         public Long BINDED_MINECRAFT_CHAT_CHANNEL = 0L;
+
+        @ConfigComment("The channel id of the minecraft console channel, this isn't to be changed unless you know what you're doing, use the command inside discord with the bot to change this")
+        public Long BINDED_MINECRAFT_CONSOLE_CHANNEL = 0L;
     }
 }

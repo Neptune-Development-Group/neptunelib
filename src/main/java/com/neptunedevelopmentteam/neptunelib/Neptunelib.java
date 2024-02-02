@@ -43,14 +43,18 @@ public class Neptunelib implements ModInitializer {
                 NeptuneServerUtils.init();
                 if (CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
                     NeptuneDiscordIntegration.init(server);
+                    NeptuneDiscordIntegration.onServerStarted();
                 }
             }
         });
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            CONFIG.save();
+        });
+        ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+            NeptuneDiscordIntegration.onServerStopped();
             if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
                 NeptuneDiscordIntegration.shutdown();
             }
-            CONFIG.save();
         });
         ServerTickEvents.END_SERVER_TICK.register((server -> {
             if (CONFIG.SERVER_UTILS.ENABLE) {
@@ -60,7 +64,9 @@ public class Neptunelib implements ModInitializer {
         ServerMessageEvents.CHAT_MESSAGE.register(((message, sender, params) -> {
             NeptuneDiscordIntegration.onIngameChatMessage(sender, message.getContent());
         }));
-
+        ServerMessageEvents.COMMAND_MESSAGE.register(((message, sender, params) -> {
+            NeptuneDiscordIntegration.onIngameConsoleMessage(message.getContent());
+        }));
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
                 NeptuneDiscordIntegration.onPlayerJoin(handler.getPlayer());
