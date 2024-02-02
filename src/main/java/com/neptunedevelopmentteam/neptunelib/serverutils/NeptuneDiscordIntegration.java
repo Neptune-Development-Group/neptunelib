@@ -96,34 +96,20 @@ public class NeptuneDiscordIntegration {
     public static void onPlayerJoin(ServerPlayerEntity player) {
         if (!checkIfAllowedToRun()) return;
         if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CHAT_CHANNEL == 0L && binded_minecraft_chat_channel == null) return;
-        if (binded_minecraft_chat_webhook == null) {
-            binded_minecraft_chat_webhook = new WebhookBuilder(binded_minecraft_chat_channel)
-                    .setName("Minecraft Chat")
-                    .create()
-                    .join();
-        }
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(player.getName().getString() + " joined the server!")
                 .setColor(Color.GREEN)
                 .setThumbnail("https://mc-heads.net/head/" + player.getUuidAsString() +  "/right.png");
-        if (binded_minecraft_chat_webhook.asIncomingWebhook().isEmpty()) return;
         binded_minecraft_chat_channel.sendMessage(embed);
     }
 
     public static void onPlayerLeave(ServerPlayerEntity player) {
         if (!checkIfAllowedToRun()) return;
         if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CHAT_CHANNEL == 0L && binded_minecraft_chat_channel == null) return;
-        if (binded_minecraft_chat_webhook == null) {
-            binded_minecraft_chat_webhook = new WebhookBuilder(binded_minecraft_chat_channel)
-                    .setName("Minecraft Chat")
-                    .create()
-                    .join();
-        }
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(player.getName().getString() + " left the server!")
                 .setColor(Color.RED)
                 .setThumbnail("https://mc-heads.net/head/" + player.getUuidAsString() +  "/right.png");
-        if (binded_minecraft_chat_webhook.asIncomingWebhook().isEmpty()) return;
         binded_minecraft_chat_channel.sendMessage(embed);
     }
 

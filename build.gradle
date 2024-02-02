@@ -25,7 +25,22 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "org.javacord:javacord:${project.javacord_version}"
 
-    include "org.javacord:javacord:${project.javacord_version}"
+    include "org.javacord:javacord-core:${project.javacord_version}"
+    include "org.javacord:javacord-api:${project.javacord_version}"
+    include "com.squareup.okhttp3:logging-interceptor:4.9.3"
+    include "com.squareup.okhttp3:okhttp:4.9.3"
+    include "com.squareup.okio:okio:3.7.0"
+    include "com.squareup.okio:okio-jvm:3.7.0"
+    include "com.fasterxml.jackson.core:jackson-core:2.12.7"
+    include "com.fasterxml.jackson.core:jackson-annotations:2.12.7"
+    include "com.fasterxml.jackson.core:jackson-databind:2.12.7.1"
+    include "com.neovisionaries:nv-websocket-client:2.14"
+    include "com.codahale:xsalsa20poly1305:0.11.0"
+    include "org.apache.logging.log4j:log4j-api:2.17.2"
+    include "org.jetbrains.kotlin:kotlin-stdlib:1.6.21"
+    include "org.apache.commons:commons-collections4:4.4"
+    include "io.vavr:vavr:0.10.4"
+    include "com.squareup.okhttp3:okhttp-bom:4.9.3"
 }
 
 processResources {
