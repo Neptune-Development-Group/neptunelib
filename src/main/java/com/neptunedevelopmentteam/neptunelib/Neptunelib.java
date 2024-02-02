@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +59,17 @@ public class Neptunelib implements ModInitializer {
         }));
         ServerMessageEvents.CHAT_MESSAGE.register(((message, sender, params) -> {
             NeptuneDiscordIntegration.onIngameChatMessage(sender, message.getContent());
+        }));
+
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
+                NeptuneDiscordIntegration.onPlayerJoin(handler.getPlayer());
+            }
+        });
+        ServerPlayConnectionEvents.DISCONNECT.register(((handler, server) -> {
+            if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
+                NeptuneDiscordIntegration.onPlayerLeave(handler.getPlayer());
+            }
         }));
     }
 }
