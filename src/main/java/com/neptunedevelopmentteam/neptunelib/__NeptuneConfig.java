@@ -16,4 +16,10 @@ public class __NeptuneConfig extends NeptuneConfig {
         @ConfigComment("Enable the schedule restart command if true")
         public Boolean SCHEDULE_RESTART_COMMAND = true;
     }
+
+    public static class NeptuneDiscordIntegrationConfig implements NeptuneSubConfig {
+
+        @ConfigComment("Enable discord integration if true")
+        public Boolean ENABLE = false;
+    }
 }

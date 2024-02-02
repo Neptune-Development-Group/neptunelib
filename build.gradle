@@ -23,7 +23,9 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    implementation "org.jsoup:jsoup:${project.jsoup_version}"
+    implementation "org.javacord:javacord:${project.javacord_version}"
+
+    include "org.javacord:javacord:${project.javacord_version}"
 }
 
 processResources {
