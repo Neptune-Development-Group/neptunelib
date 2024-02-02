@@ -1,18 +1,29 @@
 plugins {
     id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
+    id 'base'
 }
 
 version = project.mod_version
 group = project.maven_group
 
+base {
+    archivesName = project.archives_base_name
+}
+
 repositories {
     maven { url 'https://jitpack.io' }
+    maven { url 'https://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-releases/'}
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+}
+
+configurations {
+    toCopy
+    forceinclude
 }
 
 dependencies {
@@ -23,10 +34,21 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    implementation "org.javacord:javacord:${project.javacord_version}"
+    include implementation("net.dv8tion:JDA:5.0.0-beta.20")
 
-    include "org.javacord:javacord:${project.javacord_version}"
+
+    include 'org.json:json:20230227'
+    include "com.squareup.okio:okio:1.17.2"
+    include "com.squareup.okhttp3:okhttp:3.13.0"
+    include "org.apache.commons:commons-collections4:4.4"
+    include "org.jetbrains.kotlin:kotlin-stdlib:1.6.21"
+    include "com.neovisionaries:nv-websocket-client:2.14"
+    include "net.sf.trove4j:trove4j:3.0.3"
+    include 'com.fasterxml.jackson.core:jackson-databind:2.13.4.1'
+    include "com.fasterxml.jackson.core:jackson-annotations:2.13.1"
+    include "com.fasterxml.jackson.core:jackson-core:2.13.1"
 }
+
 
 processResources {
     inputs.property "version", project.version
@@ -65,11 +87,13 @@ java {
 }
 
 jar {
-    from("LICENSE") {
+        from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
     }
+//    from('lib') {
+//        into ('META-INF/jars')
+//    }
 }
-
 // configure the maven publication
 publishing {
     publications {
