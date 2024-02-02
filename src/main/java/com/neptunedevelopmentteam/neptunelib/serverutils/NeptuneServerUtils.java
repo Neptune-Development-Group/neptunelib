@@ -27,6 +27,8 @@ public class NeptuneServerUtils {
     private static boolean twoSecondsLeft = false;
     private static boolean oneSecondsLeft = false;
 
+    private static boolean restarting = false;
+
 
 
     public static void init() {
@@ -35,7 +37,7 @@ public class NeptuneServerUtils {
 
     public static void tick(MinecraftServer server) {
         if (!CONFIG.SERVER_UTILS.ENABLE) return;
-
+        if (restarting) return;
         if (ScheduleRestartCommand.ENABLED && ScheduleRestartCommand.restart_scheduled) {
             if (!DeltaTimeManager.isStillWaitingOnDelay("neptunelib-schedulerestart-time")) {
                 Text text = Text.literal("Restarting server...").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("red")));
@@ -43,6 +45,7 @@ public class NeptuneServerUtils {
                 for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                     player.networkHandler.disconnect(text);
                 }
+                restarting = true;
                 server.stop(true);
                 return;
             }
