@@ -111,7 +111,7 @@ public class NeptuneDiscordIntegration {
                     .append(message.getString())
                     .setDisplayName(sender.getName().getString())
                     .setDisplayAvatar(url)
-                    .setAllowedMentions((AllowedMentions) Collections.emptyList())
+                    .setAllowedMentions(new AllowedMentionsBuilder().build())
                     .send(binded_minecraft_chat_webhook.asIncomingWebhook().get());
         } catch (Exception e) {
             if (binded_minecraft_chat_webhook.asIncomingWebhook().isEmpty()) return;
@@ -119,6 +119,7 @@ public class NeptuneDiscordIntegration {
                     .append(message.getString())
                     .setDisplayName(sender.getName().getString())
                     .setAllowedMentions(new AllowedMentionsBuilder().build())
+                    .setDisplayAvatar((URL) null)
                     .send(binded_minecraft_chat_webhook.asIncomingWebhook().get());
         }
     }
