@@ -19,6 +19,7 @@ import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.WebhookMessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentions;
+import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 import org.javacord.api.entity.permission.PermissionType;
 import org.javacord.api.entity.user.UserStatus;
 import org.javacord.api.entity.webhook.Webhook;
@@ -117,7 +118,7 @@ public class NeptuneDiscordIntegration {
             new WebhookMessageBuilder()
                     .append(message.getString())
                     .setDisplayName(sender.getName().getString())
-                    .setAllowedMentions((AllowedMentions) Collections.emptyList())
+                    .setAllowedMentions(new AllowedMentionsBuilder().build())
                     .send(binded_minecraft_chat_webhook.asIncomingWebhook().get());
         }
     }
