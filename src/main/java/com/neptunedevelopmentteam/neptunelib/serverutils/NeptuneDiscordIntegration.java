@@ -229,7 +229,7 @@ public class NeptuneDiscordIntegration {
     }
 
     private static void setupBindChannelToMinecraftChatCommand() {
-        bindChannelToMinecraftChatCommand = SlashCommand.with("bind_channel_to_minecraft_chat", "Binds a channel to the minecraft chat",
+        bindChannelToMinecraftChatCommand = SlashCommand.with("bind_to_minecraft_chat", "Binds a channel to the minecraft chat",
                 Collections.singletonList(
                         SlashCommandOption.create(SlashCommandOptionType.CHANNEL, "channel", "The channel to bind", true)
                 ))
@@ -237,10 +237,12 @@ public class NeptuneDiscordIntegration {
                 .setEnabledInDms(false)
                 .createGlobal(api)
                 .join();
+        bindChannelToMinecraftChatCommand.createSlashCommandUpdater().updateGlobal(api);
     }
 
+
     private static void setupBindChannelToMinecraftConsoleCommand() {
-        bindChannelToMinecraftConsoleCommand = SlashCommand.with("bind_channel_to_minecraft_console", "Binds a channel to the minecraft console",
+        bindChannelToMinecraftConsoleCommand = SlashCommand.with("bind_to_minecraft_console", "Binds a channel to the minecraft console",
                 Collections.singletonList(
                         SlashCommandOption.create(SlashCommandOptionType.CHANNEL, "channel", "The channel to bind", true)
                 ))
@@ -248,6 +250,7 @@ public class NeptuneDiscordIntegration {
                 .setEnabledInDms(false)
                 .createGlobal(api)
                 .join();
+        bindChannelToMinecraftConsoleCommand.createSlashCommandUpdater().updateGlobal(api);
     }
 
     public static void shutdown() {
