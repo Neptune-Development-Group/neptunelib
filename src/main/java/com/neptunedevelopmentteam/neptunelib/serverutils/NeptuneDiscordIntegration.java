@@ -61,7 +61,7 @@ public class NeptuneDiscordIntegration {
                 .login()
                 .join();
         api.updateStatus(UserStatus.ONLINE);
-        api.setMessageCacheSize(3, 60);
+        api.setMessageCacheSize(0, 0);
         api.updateActivity("Watching the server");
         setupCommands();
         api.addSlashCommandCreateListener(NeptuneDiscordIntegration::slashCommandEventHandler);

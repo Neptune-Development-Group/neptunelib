@@ -51,7 +51,6 @@ public class Neptunelib implements ModInitializer {
             CONFIG.save();
         });
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-            NeptuneDiscordIntegration.onServerStopped();
             if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
                 NeptuneDiscordIntegration.shutdown();
             }
