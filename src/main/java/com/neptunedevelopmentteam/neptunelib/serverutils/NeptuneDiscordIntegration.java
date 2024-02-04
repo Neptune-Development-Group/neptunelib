@@ -16,6 +16,7 @@ import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.intent.Intent;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageFlag;
+import org.javacord.api.entity.message.MessageType;
 import org.javacord.api.entity.message.WebhookMessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentions;
@@ -26,6 +27,7 @@ import org.javacord.api.entity.webhook.Webhook;
 import org.javacord.api.entity.webhook.WebhookBuilder;
 import org.javacord.api.event.interaction.SlashCommandCreateEvent;
 import org.javacord.api.event.message.MessageCreateEvent;
+import org.javacord.api.event.message.MessageReplyEvent;
 import org.javacord.api.interaction.*;
 import org.javacord.api.listener.interaction.SlashCommandCreateListener;
 
@@ -172,10 +174,18 @@ public class NeptuneDiscordIntegration {
         if (event.getChannel().asServerTextChannel().isEmpty()) return;
         if (event.getMessageAuthor().isWebhook()) return;
         if (event.getMessageAuthor().isBotUser()) return;
+
         if (event.getChannel().asServerTextChannel().get().getId() == binded_minecraft_chat_channel.getId()) {
             Text discord_prefix = Text.literal("[DISCORD] ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")));
             Text username = Text.literal("<" + event.getMessageAuthor().getDisplayName() + "> ");
             Text message = Text.literal(event.getMessageContent());
+            if (event.getMessage().getType() == MessageType.REPLY && event.getMessage().getReferencedMessage().isPresent()) {
+                Message referenceMessage = event.getMessage().getReferencedMessage().get();
+                Text replyingToMessage = Text.literal("Replying to " + referenceMessage.getAuthor().getDisplayName() + ": ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")).withItalic(true));
+                Text final_message = Text.literal("").append(discord_prefix).append(replyingToMessage).append(username).append(message);
+                game_server.getPlayerManager().broadcast(final_message, false);
+                return;
+            }
             Text final_message = Text.literal("").append(discord_prefix).append(username).append(message);
             game_server.getPlayerManager().broadcast(final_message, false);
         }
@@ -183,7 +193,6 @@ public class NeptuneDiscordIntegration {
             game_server.getCommandManager().executeWithPrefix(game_server.getCommandSource(), event.getMessageContent());
         }
     }
-
     public static void onIngameConsoleMessage(Text message) {
         if (!checkIfAllowedToRun()) return;
         if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CONSOLE_CHANNEL == 0L && binded_minecraft_console_channel == null) return;
