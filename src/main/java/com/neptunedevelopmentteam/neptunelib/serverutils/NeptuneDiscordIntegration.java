@@ -6,6 +6,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -18,6 +19,7 @@ import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.MessageType;
 import org.javacord.api.entity.message.WebhookMessageBuilder;
+import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentions;
 import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
@@ -176,7 +178,7 @@ public class NeptuneDiscordIntegration {
         if (event.getMessageAuthor().isBotUser()) return;
 
         if (event.getChannel().asServerTextChannel().get().getId() == binded_minecraft_chat_channel.getId()) {
-            Text discord_prefix = Text.literal("[DISCORD] ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")));
+            Text discord_prefix = Text.literal("[DISCORD] ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, event.getMessageLink().toString())));
             Text username = Text.literal("<" + event.getMessageAuthor().getDisplayName() + "> ");
             Text message = Text.literal(event.getMessageContent());
             if (event.getMessage().getType() == MessageType.REPLY && event.getMessage().getReferencedMessage().isPresent()) {
@@ -192,6 +194,15 @@ public class NeptuneDiscordIntegration {
         else if (event.getChannel().asServerTextChannel().get().getId() == binded_minecraft_console_channel.getId()) {
             game_server.getCommandManager().executeWithPrefix(game_server.getCommandSource(), event.getMessageContent());
         }
+    }
+
+    public static void onServerRestartScheduled(Integer time_unit, String time_value) {
+        if (!checkIfAllowedToRun()) return;
+        if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CHAT_CHANNEL == 0L && binded_minecraft_chat_channel == null) return;
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle("Server will restart in " + time_value + " " + time_unit)
+                .setColor(Color.RED);
+        binded_minecraft_chat_channel.sendMessage(embed);
     }
     public static void onIngameConsoleMessage(Text message) {
         if (!checkIfAllowedToRun()) return;

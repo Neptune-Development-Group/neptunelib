@@ -7,6 +7,8 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.neptunedevelopmentteam.neptunelib.Neptunelib;
+import com.neptunedevelopmentteam.neptunelib.serverutils.NeptuneDiscordIntegration;
 import com.neptunedevelopmentteam.neptunelib.utils.DeltaTimeManager;
 import com.neptunedevelopmentteam.neptunelib.utils.NeptuneMessageUtils;
 import com.neptunedevelopmentteam.neptunelib.utils.TimeUtil;
@@ -70,7 +72,9 @@ public class ScheduleRestartCommand {
         context.getSource().sendFeedback(() -> feedback_text, true);
         Text text = Text.literal("Restarting server in " + timevalue + " " + formated_time_unit).setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("red")));
        NeptuneMessageUtils.sendToAllPlayers(context.getSource().getServer(), text);
-
+       if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
+           NeptuneDiscordIntegration.onServerRestartScheduled(timevalue, formated_time_unit);
+       }
         restart_scheduled = true;
         return 1;
     }

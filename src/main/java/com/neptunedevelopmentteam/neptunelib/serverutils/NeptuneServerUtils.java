@@ -42,11 +42,8 @@ public class NeptuneServerUtils {
             if (!DeltaTimeManager.isStillWaitingOnDelay("neptunelib-schedulerestart-time")) {
                 Text text = Text.literal("Restarting server...").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("red")));
                 NeptuneMessageUtils.sendToAllPlayers(server, text);
-                for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                    player.networkHandler.disconnect(text);
-                }
                 restarting = true;
-                server.stop(true);
+                server.stop(false);
                 return;
             }
             if (TimeUtil.millisecondsToSeconds(DeltaTimeManager.timeLeft("neptunelib-schedulerestart-time")) == 10) {
