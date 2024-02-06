@@ -66,9 +66,6 @@ public class ScheduleRestartCommand {
         context.getSource().sendFeedback(() -> feedback_text, true);
         Text text = Text.literal("Restarting server in " + timevalue + " " + formated_time_unit).setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("red")));
        NeptuneMessageUtils.sendToAllPlayers(context.getSource().getServer(), text);
-       if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
-           NeptuneDiscordIntegration.onServerRestartScheduled(timevalue, formated_time_unit);
-       }
         restart_scheduled = true;
         return 1;
     }
