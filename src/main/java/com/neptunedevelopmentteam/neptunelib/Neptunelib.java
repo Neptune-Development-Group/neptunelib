@@ -26,13 +26,8 @@ public class Neptunelib implements ModInitializer {
             if (CONFIG.SERVER_UTILS.SCHEDULE_RESTART_COMMAND) {
                 ScheduleRestartCommand.register(dispatcher);
             }
-            if (CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
-                SetBotTokenCommand.register(dispatcher);
-            }
 
         });
-        System.out.println(CONFIG.SERVER_UTILS.ENABLE);
-        System.out.println(CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE);
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             if (CONFIG.SERVER_UTILS.ENABLE) {
