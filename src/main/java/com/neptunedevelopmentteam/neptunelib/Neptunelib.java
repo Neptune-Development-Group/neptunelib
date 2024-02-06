@@ -1,7 +1,5 @@
 package com.neptunedevelopmentteam.neptunelib;
 
-import com.neptunedevelopmentteam.neptunelib.core.util.gui.NeptuneGUI;
-import com.neptunedevelopmentteam.neptunelib.serverutils.NeptuneDiscordIntegration;
 import com.neptunedevelopmentteam.neptunelib.serverutils.NeptuneServerUtils;
 import com.neptunedevelopmentteam.neptunelib.serverutils.commands.ScheduleRestartCommand;
 import com.neptunedevelopmentteam.neptunelib.serverutils.commands.SetBotTokenCommand;
@@ -13,8 +11,6 @@ import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.UUID;
 
 public class Neptunelib implements ModInitializer {
 
@@ -41,39 +37,14 @@ public class Neptunelib implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             if (CONFIG.SERVER_UTILS.ENABLE) {
                 NeptuneServerUtils.init();
-                if (CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
-                    NeptuneDiscordIntegration.init(server);
-                    NeptuneDiscordIntegration.onServerStarted();
-                }
             }
         });
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             CONFIG.save();
         });
-        ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-            if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
-                NeptuneDiscordIntegration.shutdown();
-            }
-        });
         ServerTickEvents.END_SERVER_TICK.register((server -> {
             if (CONFIG.SERVER_UTILS.ENABLE) {
                 NeptuneServerUtils.tick(server);
-            }
-        }));
-        ServerMessageEvents.CHAT_MESSAGE.register(((message, sender, params) -> {
-            NeptuneDiscordIntegration.onIngameChatMessage(sender, message.getContent());
-        }));
-        ServerMessageEvents.COMMAND_MESSAGE.register(((message, sender, params) -> {
-            NeptuneDiscordIntegration.onIngameConsoleMessage(message.getContent());
-        }));
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
-                NeptuneDiscordIntegration.onPlayerJoin(handler.getPlayer());
-            }
-        });
-        ServerPlayConnectionEvents.DISCONNECT.register(((handler, server) -> {
-            if (CONFIG.SERVER_UTILS.ENABLE && CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.ENABLE) {
-                NeptuneDiscordIntegration.onPlayerLeave(handler.getPlayer());
             }
         }));
     }
