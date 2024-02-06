@@ -6,10 +6,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+import net.minecraft.text.*;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.channel.ServerChannel;
@@ -24,6 +21,8 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentions;
 import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 import org.javacord.api.entity.permission.PermissionType;
+import org.javacord.api.entity.permission.Role;
+import org.javacord.api.entity.user.User;
 import org.javacord.api.entity.user.UserStatus;
 import org.javacord.api.entity.webhook.Webhook;
 import org.javacord.api.entity.webhook.WebhookBuilder;
@@ -32,13 +31,10 @@ import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.event.message.MessageReplyEvent;
 import org.javacord.api.interaction.*;
 import org.javacord.api.listener.interaction.SlashCommandCreateListener;
-
-import java.awt.*;
+import java.awt.Color;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 public class NeptuneDiscordIntegration {
 
@@ -180,10 +176,12 @@ public class NeptuneDiscordIntegration {
         if (event.getChannel().asServerTextChannel().get().getId() == binded_minecraft_chat_channel.getId()) {
             Text discord_prefix = Text.literal("[DISCORD] ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, event.getMessageLink().toString())));
             Text username = Text.literal("<" + event.getMessageAuthor().getDisplayName() + "> ");
-            Text message = Text.literal(event.getMessageContent());
+            Text message = getTextFromMessage(event.getMessage());
             if (event.getMessage().getType() == MessageType.REPLY && event.getMessage().getReferencedMessage().isPresent()) {
                 Message referenceMessage = event.getMessage().getReferencedMessage().get();
-                Text replyingToMessage = Text.literal("Replying to " + referenceMessage.getAuthor().getDisplayName() + ": ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")).withItalic(true));
+                Text replyingToMessage = Text.literal("Replying to " + referenceMessage.getAuthor().getDisplayName() + ": ").setStyle(Style.EMPTY.withBold(true).withColor(TextColor.parse("#5865f2")).withItalic(true)
+                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, getTextFromMessage(referenceMessage)))
+                        .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, event.getMessageLink().toString())));
                 Text final_message = Text.literal("").append(discord_prefix).append(replyingToMessage).append(username).append(message);
                 game_server.getPlayerManager().broadcast(final_message, false);
                 return;
@@ -196,12 +194,43 @@ public class NeptuneDiscordIntegration {
         }
     }
 
-    public static void onServerRestartScheduled(Integer time_unit, String time_value) {
+    private static Text getTextFromMessage(Message message) {
+        String message_string = message.getContent();
+        List<String> message_ats = new ArrayList<>();
+        if (!message.getMentionedUsers().isEmpty()) {
+            List<User> mentioned_users = message.getMentionedUsers();
+            for (User user : mentioned_users) {
+                if (message.getServer().isEmpty()) continue;
+                message_string = message_string.replace("<@" + user.getId() + ">", "@" + user.getDisplayName(message.getServer().get()));
+                message_ats.add("@" + user.getDisplayName(message.getServer().get()));
+            }
+        }
+        if (!message.getMentionedRoles().isEmpty()) {
+            List<Role> mentioned_roles = message.getMentionedRoles();
+            for (Role role : mentioned_roles) {
+                message_string = message_string.replace("<@&" + role.getId() + ">", "@" + role.getName());
+                message_ats.add("@" + role.getName());
+            }
+        }
+        if (!message.getMentionedChannels().isEmpty()) {
+            List<ServerChannel> mentioned_channels = message.getMentionedChannels();
+            for (ServerChannel channel : mentioned_channels) {
+                message_string = message_string.replace("<#" + channel.getId() + ">", "#" + channel.getName());
+                message_ats.add("#" + channel.getName());
+            }
+        }
+        if (message_ats.isEmpty()) {
+            return Text.literal(message_string);
+        }
+        return Text.literal(message_string);
+    }
+
+    public static void onServerRestartScheduled(Integer time_value, String time_unit) {
         if (!checkIfAllowedToRun()) return;
         if (Neptunelib.CONFIG.SERVER_UTILS.DISCORD_INTEGRATION.BINDED_MINECRAFT_CHAT_CHANNEL == 0L && binded_minecraft_chat_channel == null) return;
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Server will restart in " + time_value + " " + time_unit)
-                .setColor(Color.RED);
+                .setColor(Color.cyan);
         binded_minecraft_chat_channel.sendMessage(embed);
     }
     public static void onIngameConsoleMessage(Text message) {
