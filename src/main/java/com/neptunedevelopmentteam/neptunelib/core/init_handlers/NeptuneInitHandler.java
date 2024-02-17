@@ -18,6 +18,7 @@ import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Field;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 public class NeptuneInitHandler {
 
@@ -40,10 +41,11 @@ public class NeptuneInitHandler {
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
                     NeptuneItemSettings item_settings = ((NeptuneItem) item).neptunelib$getSettings();
-                    if (item_settings.group() != null) {
-                        NeptuneItemGroup group = item_settings.group().get();
-                        if (!group.items.contains(item)) {
-                            group.__addItemToGroup(item);
+                    if (!item_settings.getGroups().isEmpty()) {
+                        for (Supplier<NeptuneItemGroup> group : item_settings.getGroups()) {
+                            if (!group.get().items.contains(item)) {
+                                group.get().__addItemToGroup(item);
+                            }
                         }
                     }
                     Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), item);
@@ -65,10 +67,11 @@ public class NeptuneInitHandler {
                         NeptuneItemSettings item_settings = block_settings.item_settings;
 
                         Item block_item = new BlockItem(block, item_settings);
-                        if (item_settings.group() != null) {
-                            NeptuneItemGroup group = item_settings.group().get();
-                            if (!group.items.contains(block_item)) {
-                                group.__addItemToGroup(block_item);
+                        if (!item_settings.getGroups().isEmpty()) {
+                            for (Supplier<NeptuneItemGroup> group : item_settings.getGroups()) {
+                                if (!group.get().items.contains(block_item)) {
+                                    group.get().__addItemToGroup(block_item);
+                                }
                             }
                         }
                         Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), block_item);
