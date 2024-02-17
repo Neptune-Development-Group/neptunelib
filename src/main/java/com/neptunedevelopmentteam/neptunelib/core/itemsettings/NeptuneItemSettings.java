@@ -17,17 +17,6 @@ import java.util.function.Supplier;
 public class NeptuneItemSettings extends FabricItemSettings {
     private List<Supplier<NeptuneItemGroup>> groups = new ArrayList<>();
 
-    /**
-     * Sets the group of the NeptuneItemSettings.
-     *
-     * @param  group  the NeptuneItemGroup to set
-     * @return        the updated NeptuneItemSettings
-     */
-    public NeptuneItemSettings group(Supplier<NeptuneItemGroup> group) {
-        groups.add(group);
-        return this;
-    }
-
     public List<Supplier<NeptuneItemGroup>> getGroups() {
         return groups;
     }

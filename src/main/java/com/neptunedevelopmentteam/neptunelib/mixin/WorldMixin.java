@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(World.class)
 public class WorldMixin implements NeptuneWorld {
     @Override
-    public void updateBlockIfOnServer(BlockPos blockPos) {
+    public void neptunelib$updateBlockIfOnServer(BlockPos blockPos) {
         World world = (World) (Object) this;
         if (!(world instanceof ServerWorld serverWorld)) return;
         serverWorld.getChunkManager().markForUpdate(blockPos);

@@ -1,3 +1,3 @@
-# 1.5.0
-- Removed server utils
-- Updated Neptune Item Groups to support multiple groups
+# 1.5.1
+- Removed some old code
+- renamed some things

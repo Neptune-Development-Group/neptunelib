@@ -9,5 +9,5 @@ public interface NeptuneWorld {
      *
      * @param  blockPos  the position of the block to update
      */
-    void updateBlockIfOnServer(BlockPos blockPos);
+    void neptunelib$updateBlockIfOnServer(BlockPos blockPos);
 }
