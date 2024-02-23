@@ -33,6 +33,13 @@ public class YamlCategory {
         return parentCategory.getFullName() + "." + name;
     }
 
+    public int getCategoryCount() {
+        if (isRootCategory()) {
+            return 1;
+        }
+        return 1 + parentCategory.getCategoryCount();
+    }
+
     public boolean isMatchingCategory(String matching_full_name) {
         return matching_full_name.equals(getFullName());
     }
