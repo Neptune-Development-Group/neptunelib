@@ -15,6 +15,7 @@ public interface YamlProperty<T> {
     default String getFullName() {
         return getCategory().getFullName() + "." + getName();
     }
+    String getYamlReadyString();
 
     default boolean isStringProperty() {
         return getValue() instanceof String;

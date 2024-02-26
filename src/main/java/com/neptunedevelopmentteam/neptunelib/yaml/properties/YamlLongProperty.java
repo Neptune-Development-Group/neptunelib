@@ -16,4 +16,9 @@ public class YamlLongProperty extends AbstractYamlProperty<Long> {
     public void parseStringAndSetValue(String string) {
         setValue(Long.parseLong(string));
     }
+
+    @Override
+    public String getYamlReadyString() {
+        return name + ": " + asString();
+    }
 }

@@ -16,4 +16,9 @@ public class YamlIntegerProperty extends AbstractYamlProperty<Integer> {
     public void parseStringAndSetValue(String string) {
         setValue(Integer.parseInt(string));
     }
+
+    @Override
+    public String getYamlReadyString() {
+        return name + ": " + asString();
+    }
 }

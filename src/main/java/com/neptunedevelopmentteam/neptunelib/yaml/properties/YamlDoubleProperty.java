@@ -16,4 +16,11 @@ public class YamlDoubleProperty extends AbstractYamlProperty<Double> {
     public void parseStringAndSetValue(String string) {
         setValue(Double.parseDouble(string));
     }
+
+    @Override
+    public String getYamlReadyString() {
+        return name + ": " + asString();
+    }
+
+
 }

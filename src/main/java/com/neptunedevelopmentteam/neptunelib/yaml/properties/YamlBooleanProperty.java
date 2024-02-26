@@ -16,4 +16,9 @@ public class YamlBooleanProperty extends AbstractYamlProperty<Boolean> {
     public void parseStringAndSetValue(String string) {
         setValue(Boolean.parseBoolean(string));
     }
+
+    @Override
+    public String getYamlReadyString() {
+        return name + ": " + asString();
+    }
 }
