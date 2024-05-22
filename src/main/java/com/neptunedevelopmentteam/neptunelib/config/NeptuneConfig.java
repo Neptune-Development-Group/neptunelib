@@ -2,7 +2,6 @@ package com.neptunedevelopmentteam.neptunelib.config;
 
 import com.neptunedevelopmentteam.neptunelib.Neptunelib;
 import com.neptunedevelopmentteam.neptunelib.core.init_handlers.CustomName;
-import com.neptunedevelopmentteam.neptunelib.yaml.YamlManager;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.File;
@@ -27,7 +26,6 @@ public class NeptuneConfig {
     private NeptuneYaml loaded_config_yaml;
 
     @NotConfigField
-    private YamlManager yaml_manager;
 
     public NeptuneConfig() {
         // @TODO: Add a field analyzer

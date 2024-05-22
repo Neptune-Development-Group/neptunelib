@@ -21,13 +21,14 @@ import net.minecraft.util.Identifier;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
-public class NeptuneBlockSettings extends FabricBlockSettings {
-    
+public class NeptuneBlockSettings {
+
     public NeptuneItemSettings item_settings = new NeptuneItemSettings();
     public Boolean __has_a_block_item = false;
-    
-    public static NeptuneBlockSettings create() {
-        return new NeptuneBlockSettings();
+    private AbstractBlock.Settings settings;
+
+    public NeptuneBlockSettings(AbstractBlock.Settings settings) {
+        this.settings = settings;
     }
 
     /**
@@ -43,223 +44,213 @@ public class NeptuneBlockSettings extends FabricBlockSettings {
         return this;
     }
 
-    @Override
-    public NeptuneBlockSettings noCollision() {
-        return (NeptuneBlockSettings) super.noCollision();
+    public AbstractBlock.Settings getSettings() {
+        return settings;
     }
 
-    @Override
-    public NeptuneBlockSettings nonOpaque() {
-        return (NeptuneBlockSettings) super.nonOpaque();
+    public Boolean hasABlockItem() {
+        return __has_a_block_item;
     }
 
-    @Override
-    public NeptuneBlockSettings slipperiness(float value) {
-        return (NeptuneBlockSettings) super.slipperiness(value);
+    public NeptuneItemSettings getItemSettings() {
+        return item_settings;
     }
 
-    @Override
-    public NeptuneBlockSettings velocityMultiplier(float velocityMultiplier) {
-        return (NeptuneBlockSettings) super.velocityMultiplier(velocityMultiplier);
+    public static NeptuneBlockSettings create() {
+        return new NeptuneBlockSettings(AbstractBlock.Settings.create());
     }
 
-    @Override
-    public NeptuneBlockSettings jumpVelocityMultiplier(float jumpVelocityMultiplier) {
-        return (NeptuneBlockSettings) super.jumpVelocityMultiplier(jumpVelocityMultiplier);
+    public static NeptuneBlockSettings create(AbstractBlock.Settings settings) {
+        return new NeptuneBlockSettings(settings);
     }
 
-    @Override
-    public NeptuneBlockSettings sounds(BlockSoundGroup group) {
-        return (NeptuneBlockSettings) super.sounds(group);
+    public static NeptuneBlockSettings createWithItemSettings(NeptuneItemSettings item_settings) {
+        return new NeptuneBlockSettings(AbstractBlock.Settings.create()).addItemSettings(item_settings);
     }
 
-    @Override
-    public NeptuneBlockSettings lightLevel(ToIntFunction<BlockState> levelFunction) {
-        return (NeptuneBlockSettings) super.lightLevel(levelFunction);
-    }
-
-    @Override
-    public NeptuneBlockSettings luminance(ToIntFunction<BlockState> luminanceFunction) {
-        return (NeptuneBlockSettings) super.luminance(luminanceFunction);
-    }
-
-    @Override
-    public NeptuneBlockSettings strength(float hardness, float resistance) {
-        return (NeptuneBlockSettings) super.strength(hardness, resistance);
-    }
-
-    @Override
-    public NeptuneBlockSettings breakInstantly() {
-        return (NeptuneBlockSettings) super.breakInstantly();
-    }
-
-    @Override
-    public NeptuneBlockSettings strength(float strength) {
-        return (NeptuneBlockSettings) super.strength(strength);
-    }
-
-    @Override
-    public NeptuneBlockSettings ticksRandomly() {
-        return (NeptuneBlockSettings) super.ticksRandomly();
-    }
-
-    @Override
-    public NeptuneBlockSettings dynamicBounds() {
-        return (NeptuneBlockSettings) super.dynamicBounds();
-    }
-
-    @Override
-    public NeptuneBlockSettings dropsNothing() {
-        return (NeptuneBlockSettings) super.dropsNothing();
-    }
-
-    @Override
-    public NeptuneBlockSettings dropsLike(Block block) {
-        return (NeptuneBlockSettings) super.dropsLike(block);
-    }
-
-    @Override
-    public NeptuneBlockSettings air() {
-        return (NeptuneBlockSettings) super.air();
-    }
-
-    @Override
-    public NeptuneBlockSettings allowsSpawning(AbstractBlock.TypedContextPredicate<EntityType<?>> predicate) {
-        return (NeptuneBlockSettings) super.allowsSpawning(predicate);
-    }
-
-    @Override
-    public NeptuneBlockSettings solidBlock(AbstractBlock.ContextPredicate predicate) {
-        return (NeptuneBlockSettings) super.solidBlock(predicate);
-    }
-
-    @Override
-    public NeptuneBlockSettings suffocates(AbstractBlock.ContextPredicate predicate) {
-        return (NeptuneBlockSettings) super.suffocates(predicate);
-    }
-
-    @Override
-    public NeptuneBlockSettings blockVision(AbstractBlock.ContextPredicate predicate) {
-        return (NeptuneBlockSettings) super.blockVision(predicate);
-    }
-
-    @Override
-    public NeptuneBlockSettings postProcess(AbstractBlock.ContextPredicate predicate) {
-        return (NeptuneBlockSettings) super.postProcess(predicate);
-    }
-
-    @Override
-    public NeptuneBlockSettings emissiveLighting(AbstractBlock.ContextPredicate predicate) {
-        return (NeptuneBlockSettings) super.emissiveLighting(predicate);
-    }
-
-    @Override
-    public NeptuneBlockSettings requiresTool() {
-        return (NeptuneBlockSettings) super.requiresTool();
-    }
-
-    @Override
-    public NeptuneBlockSettings mapColor(MapColor color) {
-        return (NeptuneBlockSettings) super.mapColor(color);
-    }
-
-    @Override
-    public NeptuneBlockSettings hardness(float hardness) {
-        return (NeptuneBlockSettings) super.hardness(hardness);
-    }
-
-    @Override
-    public NeptuneBlockSettings resistance(float resistance) {
-        return (NeptuneBlockSettings) super.resistance(resistance);
-    }
-
-    @Override
-    public NeptuneBlockSettings offset(AbstractBlock.OffsetType offsetType) {
-        return (NeptuneBlockSettings) super.offset(offsetType);
-    }
-
-    @Override
-    public NeptuneBlockSettings noBlockBreakParticles() {
-        return (NeptuneBlockSettings) super.noBlockBreakParticles();
-    }
-
-    @Override
-    public NeptuneBlockSettings requires(FeatureFlag... features) {
-        return (NeptuneBlockSettings) super.requires(features);
-    }
-
-    @Override
-    public NeptuneBlockSettings mapColor(Function<BlockState, MapColor> mapColorProvider) {
-        return (NeptuneBlockSettings) super.mapColor(mapColorProvider);
-    }
-
-    @Override
-    public NeptuneBlockSettings burnable() {
-        return (NeptuneBlockSettings) super.burnable();
-    }
-
-    @Override
-    public NeptuneBlockSettings liquid() {
-        return (NeptuneBlockSettings) super.liquid();
-    }
-
-    @Override
-    public NeptuneBlockSettings solid() {
-        return (NeptuneBlockSettings) super.solid();
-    }
-
-    @Override
-    public NeptuneBlockSettings notSolid() {
-        return (NeptuneBlockSettings) super.notSolid();
-    }
-
-    @Override
-    public NeptuneBlockSettings pistonBehavior(PistonBehavior pistonBehavior) {
-        return (NeptuneBlockSettings) super.pistonBehavior(pistonBehavior);
-    }
-
-    @Override
-    public NeptuneBlockSettings instrument(Instrument instrument) {
-        return (NeptuneBlockSettings) super.instrument(instrument);
-    }
-
-    @Override
-    public NeptuneBlockSettings replaceable() {
-        return (NeptuneBlockSettings) super.replaceable();
-    }
-
-    @Override
-    public NeptuneBlockSettings lightLevel(int lightLevel) {
-        return (NeptuneBlockSettings) super.lightLevel(lightLevel);
-    }
-
-    @Override
-    public NeptuneBlockSettings luminance(int luminance) {
-        return (NeptuneBlockSettings) super.luminance(luminance);
-    }
-
-    @Override
-    public NeptuneBlockSettings drops(Identifier dropTableId) {
-        return (NeptuneBlockSettings) super.drops(dropTableId);
-    }
-
-    @Override
-    public NeptuneBlockSettings materialColor(MapColor color) {
-        return (NeptuneBlockSettings) super.materialColor(color);
-    }
-
-    @Override
-    public NeptuneBlockSettings materialColor(DyeColor color) {
-        return (NeptuneBlockSettings) super.materialColor(color);
-    }
-
-    @Override
     public NeptuneBlockSettings mapColor(DyeColor color) {
-        return (NeptuneBlockSettings) super.mapColor(color);
+        settings.mapColor(color);
+        return this;
     }
 
-    @Override
-    public NeptuneBlockSettings collidable(boolean collidable) {
-        return (NeptuneBlockSettings) super.collidable(collidable);
+    public NeptuneBlockSettings mapColor(MapColor color) {
+        settings.mapColor(color);
+        return this;
+    }
+
+    public NeptuneBlockSettings mapColor(Function<BlockState, MapColor> mapColorProvider) {
+        settings.mapColor(mapColorProvider);
+        return this;
+    }
+
+    public NeptuneBlockSettings noCollision() {
+        settings.noCollision();
+        return this;
+    }
+
+    public NeptuneBlockSettings nonOpaque() {
+        settings.nonOpaque();
+        return this;
+    }
+
+    public NeptuneBlockSettings slipperiness(float slipperiness) {
+        settings.slipperiness(slipperiness);
+        return this;
+    }
+
+    public NeptuneBlockSettings velocityMultiplier(float velocityMultiplier) {
+        settings.velocityMultiplier(velocityMultiplier);
+        return this;
+    }
+
+    public NeptuneBlockSettings jumpVelocityMultiplier(float jumpVelocityMultiplier) {
+        settings.jumpVelocityMultiplier(jumpVelocityMultiplier);
+        return this;
+    }
+
+    public NeptuneBlockSettings sounds(BlockSoundGroup soundGroup) {
+        settings.sounds(soundGroup);
+        return this;
+    }
+
+    public NeptuneBlockSettings luminance(ToIntFunction<BlockState> luminance) {
+        settings.luminance(luminance);
+        return this;
+    }
+
+    public NeptuneBlockSettings strength(float hardness, float resistance) {
+        settings.strength(hardness, resistance);
+        return this;
+    }
+
+    public NeptuneBlockSettings breakInstantly() {
+        settings.breakInstantly();
+        return this;
+    }
+
+    public NeptuneBlockSettings strength(float strength) {
+        settings.strength(strength);
+        return this;
+    }
+
+    public NeptuneBlockSettings ticksRandomly() {
+        settings.ticksRandomly();
+        return this;
+    }
+
+    public NeptuneBlockSettings dynamicBounds() {
+        settings.dynamicBounds();
+        return this;
+    }
+
+    public NeptuneBlockSettings dropsNothing() {
+        settings.dropsNothing();
+        return this;
+    }
+
+    public NeptuneBlockSettings dropsLike(Block source) {
+        settings.dropsLike(source);
+        return this;
+    }
+
+    public NeptuneBlockSettings burnable() {
+        settings.burnable();
+        return this;
+    }
+
+    public NeptuneBlockSettings liquid() {
+        settings.liquid();
+        return this;
+    }
+
+    public NeptuneBlockSettings solid() {
+        settings.solid();
+        return this;
+    }
+
+    @Deprecated
+    public NeptuneBlockSettings notSolid() {
+        settings.notSolid();
+        return this;
+    }
+
+    public NeptuneBlockSettings pistonBehavior(PistonBehavior pistonBehavior) {
+        settings.pistonBehavior(pistonBehavior);
+        return this;
+    }
+
+    public NeptuneBlockSettings air() {
+        settings.air();
+        return this;
+    }
+
+    public NeptuneBlockSettings allowsSpawning(AbstractBlock.TypedContextPredicate<EntityType<?>> predicate) {
+        settings.allowsSpawning(predicate);
+        return this;
+    }
+
+    public NeptuneBlockSettings solidBlock(AbstractBlock.ContextPredicate predicate) {
+        settings.solidBlock(predicate);
+        return this;
+    }
+
+    public NeptuneBlockSettings suffocates(AbstractBlock.ContextPredicate predicate) {
+        settings.suffocates(predicate);
+        return this;
+    }
+
+    public NeptuneBlockSettings blockVision(AbstractBlock.ContextPredicate predicate) {
+        settings.blockVision(predicate);
+        return this;
+    }
+
+    public NeptuneBlockSettings postProcess(AbstractBlock.ContextPredicate predicate) {
+        settings.postProcess(predicate);
+        return this;
+    }
+
+    public NeptuneBlockSettings emissiveLighting(AbstractBlock.ContextPredicate predicate) {
+        settings.emissiveLighting(predicate);
+        return this;
+    }
+
+    public NeptuneBlockSettings requiresTool() {
+        settings.requiresTool();
+        return this;
+    }
+
+    public NeptuneBlockSettings hardness(float hardness) {
+        settings.hardness(hardness);
+        return this;
+    }
+
+    public NeptuneBlockSettings resistance(float resistance) {
+        settings.resistance(resistance);
+        return this;
+    }
+
+    public NeptuneBlockSettings offset(AbstractBlock.OffsetType offsetType) {
+        settings.offset(offsetType);
+        return this;
+    }
+
+    public NeptuneBlockSettings noBlockBreakParticles() {
+        settings.noBlockBreakParticles();
+        return this;
+    }
+
+    public NeptuneBlockSettings requires(FeatureFlag... features) {
+        settings.requires(features);
+        return this;
+    }
+
+    public NeptuneBlockSettings instrument(Instrument instrument) {
+        settings.instrument(instrument);
+        return this;
+    }
+
+    public NeptuneBlockSettings replaceable() {
+        settings.replaceable();
+        return this;
     }
 }
