@@ -1,6 +1,7 @@
 package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
+import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneBlock;
@@ -80,15 +81,10 @@ public class NeptuneInitHandler {
                     e.printStackTrace();
                 }
             }
-            else if (field.getType() == SoundEvent.class) {
+            else if (field.getType() == NeptuneSound.class) {
                 try {
-                    SoundEvent soundEvent = (SoundEvent) field.get(null);
-                    String field_name_fixed = field.getName().toLowerCase(Locale.ROOT);
-                    if (field.isAnnotationPresent(CustomName.class)) {
-                        CustomName customName = field.getAnnotation(CustomName.class);
-                        field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
-                    }
-                    Registry.register(Registries.SOUND_EVENT, new Identifier(namespace, field_name_fixed), soundEvent);
+                    NeptuneSound neptuneSound = (NeptuneSound) field.get(null);
+                    Registry.register(Registries.SOUND_EVENT, neptuneSound.getSoundIdentifier(), neptuneSound.getSoundEvent());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
