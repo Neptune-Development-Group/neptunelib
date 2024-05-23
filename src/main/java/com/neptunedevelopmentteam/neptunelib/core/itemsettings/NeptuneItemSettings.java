@@ -22,6 +22,11 @@ public class NeptuneItemSettings extends Item.Settings {
         return groups;
     }
 
+    public NeptuneItemSettings group(Supplier<NeptuneItemGroup> group) {
+        groups.add(group);
+        return this;
+    }
+
     @Override
     public NeptuneItemSettings equipmentSlot(EquipmentSlotProvider equipmentSlotProvider) {
         return (NeptuneItemSettings) super.equipmentSlot(equipmentSlotProvider);
