@@ -19,6 +19,9 @@ public class NeptuneLanguageProvider {
 
     public void addTranslation(String key, String language_identifier, String translation) {
         HashMap<String, String> temp = new HashMap<>();
+        if (this.translations.containsKey(key)) {
+            temp = this.translations.get(key);
+        }
         temp.put(language_identifier, translation);
         this.translations.put(key, temp);
     }
