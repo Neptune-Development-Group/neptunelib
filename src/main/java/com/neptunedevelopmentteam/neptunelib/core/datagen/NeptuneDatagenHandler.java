@@ -4,6 +4,7 @@ import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSoundProvider;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneLanguageProvider;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneTranslation;
+import com.neptunedevelopmentteam.neptunelib.core.datagen.worldgen.NeptuneWorldGenProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.block.Block;
@@ -32,7 +33,9 @@ public class NeptuneDatagenHandler {
         this.fabricDataGenerator = fabricDataGenerator;
         this.mod_id = fabricDataGenerator.getModId();
         this.languageProvider = new NeptuneLanguageProvider(fabricDataGenerator);
-        this.soundProvider = fabricDataGenerator.createPack().addProvider(NeptuneSoundProvider::new);
+        var pack = fabricDataGenerator.createPack();
+        this.soundProvider = pack.addProvider(NeptuneSoundProvider::new);
+        pack.addProvider(NeptuneWorldGenProvider::new);
     }
 
     public void addSound(NeptuneSound neptuneSound) {

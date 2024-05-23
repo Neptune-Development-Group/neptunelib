@@ -2,26 +2,32 @@ package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
+import com.neptunedevelopmentteam.neptunelib.core.datagen.worldgen.NeptuneOre;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneBlock;
 import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneItem;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registerable;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.PlacedFeature;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.function.Supplier;
 
 public class NeptuneInitHandler {
+
+    public static List<NeptuneOre> neptuneOres = new ArrayList<>();
 
     /**
      * Registers all fields of the given class that are of type Item or Block into the specified namespace.
@@ -89,6 +95,17 @@ public class NeptuneInitHandler {
                     e.printStackTrace();
                 }
             }
+            else if (field.getType() == NeptuneOre.class) {
+                try {
+                    NeptuneOre neptuneOre = (NeptuneOre) field.get(null);
+                    if (!neptuneOres.contains(neptuneOre)) {
+                        neptuneOres.add(neptuneOre);
+                        neptuneOre.generate();
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
             else if (field.getType() == BlockEntityType.class) {
                 try {
                     BlockEntityType blockEntityType = (BlockEntityType) field.get(null);
@@ -116,5 +133,13 @@ public class NeptuneInitHandler {
                 }
             }
         }
+    }
+
+    public static void bootstrap_configured_feature_ores(Registerable<ConfiguredFeature<?, ?>> configuredFeatureRegisterable) {
+        neptuneOres.forEach((neptuneOre) -> neptuneOre.registerConfiguredFeatures(configuredFeatureRegisterable));
+    }
+
+    public static void bootstrap_placeable_feature_ores(Registerable<PlacedFeature> placedFeatureRegisterable) {
+        neptuneOres.forEach((neptuneOre) -> neptuneOre.registerPlacedFeatures(placedFeatureRegisterable));
     }
 }
