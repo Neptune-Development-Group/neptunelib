@@ -32,7 +32,7 @@ public class NeptuneLanguageProvider {
             map.forEach((language_identifier, translation) -> {
                 if (!providers.containsKey(language_identifier)) {
                     NeptuneSubLanguageProvider subLanguageProvider = pack.addProvider((FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) -> new NeptuneSubLanguageProvider(language_identifier, dataOutput, registryLookup));
-                    subLanguageProvider.addTranslation(language_identifier, translation);
+                    subLanguageProvider.addTranslation(translation_key, translation);
                     providers.put(language_identifier, subLanguageProvider);
                 }
                 else {
