@@ -17,7 +17,7 @@ jobs:
         run: env
 
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -26,10 +26,10 @@ jobs:
         with:
           distribution: "temurin"
           java-version: 21
+          cache: gradle
 
-      - name: Make Gradle Wrapper Executable
-        if: ${{ runner.os != 'Windows' }}
-        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build
         run: ./gradlew clean build
