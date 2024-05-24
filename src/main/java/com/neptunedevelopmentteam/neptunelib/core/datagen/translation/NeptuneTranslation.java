@@ -8,6 +8,7 @@ public class NeptuneTranslation {
 
     public NeptuneTranslation(NeptuneLanguages language, String translation) {
         this.language = language;
+        this.translation = translation;
     }
 
     public static NeptuneTranslation createTranslation(NeptuneLanguages language, String translation) {
