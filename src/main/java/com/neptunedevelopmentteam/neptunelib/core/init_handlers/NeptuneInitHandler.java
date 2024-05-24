@@ -29,6 +29,23 @@ public class NeptuneInitHandler {
 
     public static List<NeptuneOre> neptuneOres = new ArrayList<>();
 
+    public static <T> void registerCustom(Class<? extends CustomObjectInit<T>> clazz, String namespace) {
+        Field[] allFields = clazz.getDeclaredFields();
+        for (Field field : allFields) {
+            if (field.getType() == NeptuneOre.class) {
+                try {
+                    NeptuneOre neptuneOre = (NeptuneOre) field.get(null);
+                    if (!neptuneOres.contains(neptuneOre)) {
+                        neptuneOres.add(neptuneOre);
+                        neptuneOre.generate();
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     /**
      * Registers all fields of the given class that are of type Item or Block into the specified namespace.
      *
