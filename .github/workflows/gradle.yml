@@ -48,3 +48,16 @@ jobs:
 
           loaders: fabric
           java: "${{env.JAVA_VERSION}}"
+      - name: Get release tag
+        id: get_tag
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+
+      - name: Trigger Jitpack Build
+        run: |
+          TAG=${{ steps.get_tag.outputs.tag }}
+          JITPACK_BUILD_URL="https://jitpack.io/com/github/Neptune-Development-Group/neptunelib/$TAG/build.log"
+          echo "Triggering JitPack build for $TAG"
+          curl -I $JITPACK_BUILD_URL
+
+      - name: Notify success
+        run: echo "Jitpack build triggered successfully"
