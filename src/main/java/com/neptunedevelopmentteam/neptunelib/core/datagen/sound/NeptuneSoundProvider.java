@@ -31,7 +31,7 @@ public class NeptuneSoundProvider implements DataProvider {
 
     @Override
     public String getName() {
-        return "Sound Definitions";
+        return "Sounds";
     }
 
     public void addSound(NeptuneSound neptuneSound) {

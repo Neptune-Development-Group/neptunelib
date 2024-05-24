@@ -25,7 +25,7 @@ public class NeptuneDatagenHandler {
     private NeptuneRecipeProvider recipeProvider;
     public static NeptuneDatagenHandler register(FabricDataGenerator fabricDataGenerator) {
         datagenHandlers.put(fabricDataGenerator.getModId(), new NeptuneDatagenHandler(fabricDataGenerator));
-        return new NeptuneDatagenHandler(fabricDataGenerator);
+        return get(fabricDataGenerator.getModId());
     }
 
     public static NeptuneDatagenHandler get(String mod_id) {
