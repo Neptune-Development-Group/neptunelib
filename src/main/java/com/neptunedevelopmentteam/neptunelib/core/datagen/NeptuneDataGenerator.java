@@ -1,5 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.core.datagen;
 
+import com.neptunedevelopmentteam.neptunelib.core.datagen.recipe.NeptuneRecipe;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneTranslation;
 import com.neptunedevelopmentteam.neptunelib.core.init_handlers.NeptuneInitHandler;
@@ -16,6 +17,10 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         this.handler = NeptuneDatagenHandler.register(fabricDataGenerator);
+    }
+
+    public void addRecipe(NeptuneRecipe recipe) {
+        this.handler.addRecipe(recipe);
     }
 
     public NeptuneDataGenerator() {

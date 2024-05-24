@@ -1,5 +1,7 @@
 package com.neptunedevelopmentteam.neptunelib.core.datagen;
 
+import com.neptunedevelopmentteam.neptunelib.core.datagen.recipe.NeptuneRecipe;
+import com.neptunedevelopmentteam.neptunelib.core.datagen.recipe.NeptuneRecipeProvider;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSoundProvider;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneLanguageProvider;
@@ -20,6 +22,7 @@ public class NeptuneDatagenHandler {
     private static  HashMap<String, NeptuneDatagenHandler> datagenHandlers = new HashMap<>();
     private NeptuneLanguageProvider languageProvider;
     private NeptuneSoundProvider soundProvider;
+    private NeptuneRecipeProvider recipeProvider;
     public static NeptuneDatagenHandler register(FabricDataGenerator fabricDataGenerator) {
         datagenHandlers.put(fabricDataGenerator.getModId(), new NeptuneDatagenHandler(fabricDataGenerator));
         return new NeptuneDatagenHandler(fabricDataGenerator);
@@ -36,6 +39,7 @@ public class NeptuneDatagenHandler {
         var pack = fabricDataGenerator.createPack();
         this.soundProvider = pack.addProvider(NeptuneSoundProvider::new);
         pack.addProvider(NeptuneWorldGenProvider::new);
+        pack.addProvider(NeptuneRecipeProvider::new);
     }
 
     public void addSound(NeptuneSound neptuneSound) {
@@ -61,5 +65,9 @@ public class NeptuneDatagenHandler {
 
     public void generate() {
         languageProvider.generate();
+    }
+
+    public void addRecipe(NeptuneRecipe recipe) {
+        this.recipeProvider.addRecipe(recipe);
     }
 }
