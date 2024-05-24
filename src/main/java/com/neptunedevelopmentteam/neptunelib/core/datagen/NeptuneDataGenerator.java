@@ -26,10 +26,6 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
         this.handler.addRecipe(recipe);
     }
 
-    public NeptuneDataGenerator() {
-        this.handler = NeptuneDatagenHandler.get(this.getModId());
-    }
-
     public void addTranslation(String key, NeptuneTranslation... translations) {
         this.handler.addTranslation(key, translations);
     }
