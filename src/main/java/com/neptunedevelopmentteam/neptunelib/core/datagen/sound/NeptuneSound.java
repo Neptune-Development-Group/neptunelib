@@ -24,7 +24,7 @@ public class NeptuneSound {
 
     public NeptuneSound(Identifier sound_group_identifier, float pitch, float volume, boolean stream, int attenuation_distance, Identifier... sound_paths) {
         this.sound_event = SoundEvent.of(sound_group_identifier);
-        this.subtitle_translation_key = sound_group_identifier.getNamespace() + "." + ".sound.subtitle" + "." + sound_group_identifier.getPath();
+        this.subtitle_translation_key =  "sound." + sound_group_identifier.getNamespace() + "." + sound_group_identifier.getPath();
         this.sound_identifier = sound_group_identifier;
         this.pitch = pitch;
         this.volume = volume;
@@ -67,21 +67,20 @@ public class NeptuneSound {
 
     public JsonObject getJsonObject() {
         JsonObject soundJsonObject = new JsonObject();
-        JsonObject soundsJsonObject = new JsonObject();
+        JsonArray soundsJsonObject = new JsonArray();
         // https://mcasset.cloud/1.20.6/assets/minecraft
         // https://minecraft.fandom.com/wiki/Sounds.json
 
         for (Identifier sound_path : sound_paths) {
-            JsonObject soundFileObject = new JsonObject();
-            soundFileObject.addProperty("name", sound_path.getPath());
-            soundFileObject.addProperty("pitch", pitch);
-            soundFileObject.addProperty("volume", volume);
-            soundFileObject.addProperty("stream", stream);
-            soundFileObject.addProperty("attenuation_distance", attenuation_distance);
-            soundsJsonObject.add(sound_path.toString(), soundFileObject);
+            soundsJsonObject.add(sound_path.toString());
         }
         soundJsonObject.addProperty("subtitle", subtitle_translation_key);
         soundJsonObject.add("sounds", soundsJsonObject);
+        soundJsonObject.addProperty("name", sound_identifier.getPath());
+        soundJsonObject.addProperty("pitch", pitch);
+        soundJsonObject.addProperty("volume", volume);
+        soundJsonObject.addProperty("stream", stream);
+        soundJsonObject.addProperty("attenuation_distance", attenuation_distance);
         return soundJsonObject;
     }
 
