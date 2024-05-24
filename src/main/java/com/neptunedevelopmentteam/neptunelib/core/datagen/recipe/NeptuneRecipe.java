@@ -40,17 +40,15 @@ public class NeptuneRecipe {
             String pattern2 = "";
             String pattern3 = "";
 
-            if (recipeInput.getRow_1().getItem_1() != null) pattern1 += characterHashMap.getOrDefault(recipeInput.getRow_1().getItem_1(), ' ');
-            if (recipeInput.getRow_1().getItem_2() != null) pattern1 += characterHashMap.getOrDefault(recipeInput.getRow_1().getItem_2(), ' ');
-            if (recipeInput.getRow_1().getItem_3() != null) pattern1 += characterHashMap.getOrDefault(recipeInput.getRow_1().getItem_3(), ' ');
-
-            if (recipeInput.getRow_2().getItem_1() != null) pattern2 += characterHashMap.getOrDefault(recipeInput.getRow_2().getItem_1(), ' ');
-            if (recipeInput.getRow_2().getItem_2() != null) pattern2 += characterHashMap.getOrDefault(recipeInput.getRow_2().getItem_2(), ' ');
-            if (recipeInput.getRow_2().getItem_3() != null) pattern2 += characterHashMap.getOrDefault(recipeInput.getRow_2().getItem_3(), ' ');
-
-            if (recipeInput.getRow_3().getItem_1() != null) pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_1(), ' ');
-            if (recipeInput.getRow_3().getItem_2() != null) pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_2(), ' ');
-            if (recipeInput.getRow_3().getItem_3() != null) pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_3(), ' ');
+            pattern1 += characterHashMap.getOrDefault(recipeInput.getRow_1().getItem_1(), ' ');
+            pattern1 += characterHashMap.getOrDefault(recipeInput.getRow_1().getItem_2(), ' ');
+            pattern1 += characterHashMap.getOrDefault(recipeInput.getRow_1().getItem_3(), ' ');
+            pattern2 += characterHashMap.getOrDefault(recipeInput.getRow_2().getItem_1(), ' ');
+            pattern2 += characterHashMap.getOrDefault(recipeInput.getRow_2().getItem_2(), ' ');
+            pattern2 += characterHashMap.getOrDefault(recipeInput.getRow_2().getItem_3(), ' ');
+            pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_1(), ' ');
+            pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_2(), ' ');
+            pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_3(), ' ');
             builder.pattern(pattern1).pattern(pattern2).pattern(pattern3);
             characterHashMap.forEach((ingredient, character) -> builder.criterion(NeptuneRecipeProvider.hasItem(ingredient), NeptuneRecipeProvider.conditionsFromItem(ingredient)));
             builder.offerTo(exporter, identifier);
