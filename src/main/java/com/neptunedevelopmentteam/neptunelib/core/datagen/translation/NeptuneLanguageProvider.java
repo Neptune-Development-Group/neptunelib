@@ -26,6 +26,18 @@ public class NeptuneLanguageProvider {
         this.translations.put(key, temp);
     }
 
+    public void register() {
+        HashMap<String, NeptuneSubLanguageProvider> providers = new HashMap<>();
+        translations.forEach((translation_key, map) -> {
+            map.forEach((language_identifier, translation) -> {
+                if (!providers.containsKey(language_identifier)) {
+                    NeptuneSubLanguageProvider subLanguageProvider = pack.addProvider((FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) -> new NeptuneSubLanguageProvider(language_identifier, dataOutput, registryLookup));
+                    providers.put(language_identifier, subLanguageProvider);
+                }
+            });
+        });
+    }
+
     public void generate() {
         HashMap<String, NeptuneSubLanguageProvider> providers = new HashMap<>();
         translations.forEach((translation_key, map) -> {

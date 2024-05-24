@@ -36,6 +36,7 @@ public class NeptuneDatagenHandler {
         this.fabricDataGenerator = fabricDataGenerator;
         this.mod_id = fabricDataGenerator.getModId();
         this.languageProvider = new NeptuneLanguageProvider(fabricDataGenerator);
+        languageProvider.register();
         var pack = fabricDataGenerator.createPack();
         this.soundProvider = pack.addProvider(NeptuneSoundProvider::new);
         pack.addProvider(NeptuneWorldGenProvider::new);

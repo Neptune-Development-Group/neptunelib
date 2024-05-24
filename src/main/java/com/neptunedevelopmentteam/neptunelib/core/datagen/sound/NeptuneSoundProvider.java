@@ -39,6 +39,6 @@ public class NeptuneSoundProvider implements DataProvider {
     }
 
     public Path getOutputPath() {
-        return dataOutput.resolvePath(DataOutput.OutputType.RESOURCE_PACK).resolve(dataOutput.getModId()).resolve("sound.json");
+        return dataOutput.resolvePath(DataOutput.OutputType.RESOURCE_PACK).resolve(dataOutput.getModId()).resolve("sounds.json");
     }
 }

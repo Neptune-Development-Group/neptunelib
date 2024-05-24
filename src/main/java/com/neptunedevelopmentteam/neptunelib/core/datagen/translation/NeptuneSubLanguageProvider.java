@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 public class NeptuneSubLanguageProvider extends FabricLanguageProvider {
-    private HashMap<String, String> translations = new HashMap<>();
+    private final HashMap<String, String> translations = new HashMap<>();
     private FabricDataOutput dataOutput;
     private CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
 

@@ -61,6 +61,7 @@ public class NeptuneOre {
             modifiers.add(RarityFilterPlacementModifier.of(rarity));
         }
         modifiers.add(BiomePlacementModifier.of());
+        modifiers.add(CountPlacementModifier.of(veins_per_chunk));
         modifiers.add(HeightRangePlacementModifier.uniform(YOffset.fixed(lowest_height), YOffset.fixed(max_height)));
     }
 
