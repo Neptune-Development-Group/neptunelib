@@ -39,7 +39,7 @@ public class NeptuneDatagenHandler {
         var pack = fabricDataGenerator.createPack();
         this.soundProvider = pack.addProvider(NeptuneSoundProvider::new);
         pack.addProvider(NeptuneWorldGenProvider::new);
-        pack.addProvider(NeptuneRecipeProvider::new);
+        this.recipeProvider = pack.addProvider(NeptuneRecipeProvider::new);
     }
 
     public void addSound(NeptuneSound neptuneSound) {

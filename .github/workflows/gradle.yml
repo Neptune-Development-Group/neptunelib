@@ -7,6 +7,7 @@ env:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   build:
@@ -54,6 +55,11 @@ jobs:
 
           loaders: fabric
           java: "${{env.JAVA_VERSION}}"
+
+      - name: Publish package
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger Jitpack Build
         run: |
