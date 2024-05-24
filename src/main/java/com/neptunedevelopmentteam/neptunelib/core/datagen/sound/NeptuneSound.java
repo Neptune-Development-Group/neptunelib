@@ -17,7 +17,7 @@ public class NeptuneSound {
     private int attenuation_distance = 16;
     public NeptuneSound(Identifier sound_group_identifier, Identifier... sound_paths) {
         this.sound_event = SoundEvent.of(sound_group_identifier);
-        this.subtitle_translation_key = sound_group_identifier.getNamespace() + "." + ".sound.subtitle" + "." + sound_group_identifier.getPath();
+        this.subtitle_translation_key = "sound." + sound_group_identifier.getNamespace() + "." + sound_group_identifier.getPath();
         this.sound_identifier = sound_group_identifier;
         this.sound_paths = sound_paths;
     }
