@@ -2,7 +2,11 @@ name: Trigger Jitpack Build on New Release
 
 on:
   release:
-    types: [created, prereleased, published]
+    types:
+      - published
+      - edited
+      - released
+      - created
 
 jobs:
   trigger_build:
