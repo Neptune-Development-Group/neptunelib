@@ -35,6 +35,7 @@ public class NeptuneRecipe {
             for (int i = 0; i < recipeInput.getInputs().toArray().length; i++) {
                 if (characterHashMap.containsKey(recipeInput.getInputs().get(i))) { continue; }
                 characterHashMap.put(recipeInput.getInputs().get(i), Character.forDigit(i, 10));
+                builder.input(Character.forDigit(i, 10), recipeInput.getInputs().get(i));
             }
             String pattern1 = "";
             String pattern2 = "";
