@@ -20,6 +20,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+      - uses: madhead/read-java-properties@latest
+        id: tag
+        with:
+          file: gradle.properties
+          property: mod_version
+          default: 0.0.1
 
       - name: Setup Java
         uses: actions/setup-java@v2
@@ -48,12 +54,6 @@ jobs:
 
           loaders: fabric
           java: "${{env.JAVA_VERSION}}"
-      - uses: madhead/read-java-properties@latest
-        id: tag
-        with:
-          file: gradle.properties
-          property: mod_version
-          default: 0.0.1
 
       - name: Trigger Jitpack Build
         run: |
