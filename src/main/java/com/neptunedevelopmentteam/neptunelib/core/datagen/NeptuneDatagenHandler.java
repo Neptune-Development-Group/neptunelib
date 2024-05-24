@@ -52,17 +52,6 @@ public class NeptuneDatagenHandler {
         }
     }
 
-    public void addTranslation(Item item, NeptuneTranslation... translations) {
-        this.addTranslation(item.getTranslationKey(), translations);
-    }
-    public void addTranslation(Block block, NeptuneTranslation... translations) {
-        this.addTranslation(block.getTranslationKey(), translations);
-    }
-
-    public void addTranslation(NeptuneSound sound, NeptuneTranslation... translations) {
-        this.addTranslation(sound.getTranslationKey(), translations);
-    }
-
     public void generate() {
         languageProvider.generate();
     }

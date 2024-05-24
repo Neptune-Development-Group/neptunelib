@@ -4,6 +4,7 @@ import com.neptunedevelopmentteam.neptunelib.core.datagen.recipe.NeptuneRecipe;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneTranslation;
 import com.neptunedevelopmentteam.neptunelib.core.init_handlers.NeptuneInitHandler;
+import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -43,6 +44,10 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
 
     public void addTranslation(NeptuneSound sound, NeptuneTranslation... translations) {
         this.addTranslation(sound.getTranslationKey(), translations);
+    }
+
+    public void addTranslation(NeptuneItemGroup itemGroup, NeptuneTranslation... translations) {
+        this.addTranslation(itemGroup.getTranslationKey(), translations);
     }
 
     public void addSound(NeptuneSound neptuneSound) {

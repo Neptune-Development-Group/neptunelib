@@ -10,21 +10,21 @@ public class NeptuneSound {
     private final SoundEvent sound_event;
     private String subtitle_translation_key;
     private Identifier sound_identifier;
-    private String[] sound_paths;
+    private Identifier[] sound_paths;
     private float pitch = 1.0f;
     private float volume = 1.0f;
     private boolean stream = false; // Set to true if it's for music
     private int attenuation_distance = 16;
-    public NeptuneSound(String subtitle_translation_key, Identifier sound_group_identifier, String... sound_paths) {
+    public NeptuneSound(Identifier sound_group_identifier, Identifier... sound_paths) {
         this.sound_event = SoundEvent.of(sound_group_identifier);
-        this.subtitle_translation_key = subtitle_translation_key;
+        this.subtitle_translation_key = sound_group_identifier.getNamespace() + "." + ".sound.subtitle" + "." + sound_group_identifier.getPath();
         this.sound_identifier = sound_group_identifier;
         this.sound_paths = sound_paths;
     }
 
-    public NeptuneSound(String subtitle_translation_key, Identifier sound_group_identifier, float pitch, float volume, boolean stream, int attenuation_distance, String... sound_paths) {
+    public NeptuneSound(Identifier sound_group_identifier, float pitch, float volume, boolean stream, int attenuation_distance, Identifier... sound_paths) {
         this.sound_event = SoundEvent.of(sound_group_identifier);
-        this.subtitle_translation_key = subtitle_translation_key;
+        this.subtitle_translation_key = sound_group_identifier.getNamespace() + "." + ".sound.subtitle" + "." + sound_group_identifier.getPath();
         this.sound_identifier = sound_group_identifier;
         this.pitch = pitch;
         this.volume = volume;
@@ -45,7 +45,7 @@ public class NeptuneSound {
         return sound_identifier;
     }
 
-    public String[] getSoundPaths() {
+    public Identifier[] getSoundPaths() {
         return sound_paths;
     }
 
@@ -71,17 +71,14 @@ public class NeptuneSound {
         // https://mcasset.cloud/1.20.6/assets/minecraft
         // https://minecraft.fandom.com/wiki/Sounds.json
 
-        for (String sound_path : sound_paths) {
-            if (sound_path.endsWith(".ogg")) {
-                sound_path = sound_path.substring(0, sound_path.length() - 4);
-            }
+        for (Identifier sound_path : sound_paths) {
             JsonObject soundFileObject = new JsonObject();
-            soundFileObject.addProperty("name", sound_path);
+            soundFileObject.addProperty("name", sound_path.getPath());
             soundFileObject.addProperty("pitch", pitch);
             soundFileObject.addProperty("volume", volume);
             soundFileObject.addProperty("stream", stream);
             soundFileObject.addProperty("attenuation_distance", attenuation_distance);
-            soundsJsonObject.add(sound_path, soundFileObject);
+            soundsJsonObject.add(sound_path.toString(), soundFileObject);
         }
         soundJsonObject.addProperty("subtitle", subtitle_translation_key);
         soundJsonObject.add("sounds", soundsJsonObject);
