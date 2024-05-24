@@ -55,7 +55,17 @@ public class RecipeInput {
     }
 
     public List<ItemConvertible> getInputs() {
-        return List.of(row_1.getItem_1(), row_1.getItem_2(), row_1.getItem_3(), row_2.getItem_1(), row_2.getItem_2(), row_2.getItem_3(), row_3.getItem_1(), row_3.getItem_2(), row_3.getItem_3());
+        List<ItemConvertible> list = new ArrayList<>();
+        if (row_1.getItem_1() != null) list.add(row_1.getItem_1());
+        if (row_1.getItem_2() != null) list.add(row_1.getItem_2());
+        if (row_1.getItem_3() != null) list.add(row_1.getItem_3());
+        if (row_2.getItem_1() != null) list.add(row_2.getItem_1());
+        if (row_2.getItem_2() != null) list.add(row_2.getItem_2());
+        if (row_2.getItem_3() != null) list.add(row_2.getItem_3());
+        if (row_3.getItem_1() != null) list.add(row_3.getItem_1());
+        if (row_3.getItem_2() != null) list.add(row_3.getItem_2());
+        if (row_3.getItem_3() != null) list.add(row_3.getItem_3());
+        return list;
     }
 
     public static RecipeInput createShapedRecipe(RecipeRow row_1, RecipeRow row_2, RecipeRow row_3) {
