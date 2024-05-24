@@ -18,6 +18,8 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         this.handler = NeptuneDatagenHandler.register(fabricDataGenerator);
+        this.onInit();
+        handler.generate();
     }
 
     public void addRecipe(NeptuneRecipe recipe) {
@@ -26,8 +28,6 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
 
     public NeptuneDataGenerator() {
         this.handler = NeptuneDatagenHandler.get(this.getModId());
-        this.onInit();
-        handler.generate();
     }
 
     public void addTranslation(String key, NeptuneTranslation... translations) {
