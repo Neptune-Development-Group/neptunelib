@@ -15,11 +15,17 @@ public class NeptuneRecipe {
     private final RecipeOutput recipeOutput;
     private final Identifier identifier;
 
-    public NeptuneRecipe(Identifier id, RecipeCategory category, RecipeInput recipeInput, RecipeOutput recipeOutput) {
+    public NeptuneRecipe(RecipeCategory category, RecipeInput recipeInput, RecipeOutput recipeOutput) {
         this.category = category;
         this.recipeInput = recipeInput;
         this.recipeOutput = recipeOutput;
-        this.identifier = id;
+        String temp_identifier = NeptuneRecipeProvider.getRecipeName(recipeOutput.getItem());
+        if (recipeInput.getType() == RecipeType.SHAPED) {
+            temp_identifier += "_shaped";
+        } else if (recipeInput.getType() == RecipeType.SHAPELESS) {
+            temp_identifier += "_shapeless";
+        }
+        this.identifier = new Identifier(temp_identifier);
     }
 
     public void build(RecipeExporter exporter) {
