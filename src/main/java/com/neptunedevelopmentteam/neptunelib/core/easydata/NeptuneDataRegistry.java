@@ -46,7 +46,7 @@ public class NeptuneDataRegistry {
             default:
                 throw new IllegalArgumentException("Unsupported default value type: " + default_value.getClass());
         }
-        DataComponentType<?> dataComponentType = registerDataComponentType(identifier, builder -> builder.codec((Codec<Object>) codec).packetCodec((PacketCodec<? super RegistryByteBuf, Object>) packetCodec));
+        DataComponentType dataComponentType = NeptuneDataRegistry.registerDataComponentType(identifier, builder -> builder.codec((Codec<Object>) codec).packetCodec((PacketCodec<? super RegistryByteBuf, Object>) packetCodec));
         registry.put(identifier, dataComponentType);
         return new NeptuneDataType<>(identifier, default_value);
     }
@@ -55,8 +55,8 @@ public class NeptuneDataRegistry {
         return registry.get(type.getIdentifier());
     }
 
-    private static <T> DataComponentType registerDataComponentType(Identifier identifier, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+    private static <T> DataComponentType<T> registerDataComponentType(Identifier identifier, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         String id = identifier.toString().toLowerCase(Locale.ROOT);
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, id, ((DataComponentType.Builder)builderOperator.apply(DataComponentType.builder())).build());
+        return Registry.register(Registries.DATA_COMPONENT_TYPE, id,  (DataComponentType<T>) ((DataComponentType.Builder)builderOperator.apply(DataComponentType.builder())).build());
     }
 }
