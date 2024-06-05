@@ -20,12 +20,18 @@ import java.util.function.UnaryOperator;
 public class NeptuneDataRegistry {
     private static final HashMap<Identifier, DataComponentType> registry = new HashMap<>();
 
-    public static <T> NeptuneDataType<T> register(@NotNull Identifier identifier, @NotNull T default_value) {
+    public static <T> NeptuneDataType<T> create(@NotNull Identifier identifier, @NotNull T default_value) {
         if (registry.containsKey(identifier)) {
             throw new IllegalArgumentException("Identifier already registered: " + identifier);
         }
+        return new NeptuneDataType<>(identifier, default_value);
+    }
+
+    public static void register(NeptuneDataType type) {
         Codec<?> codec;
         PacketCodec<?, ?> packetCodec;
+        var default_value = type.getDefaultValue();
+        Identifier identifier = type.getIdentifier();
         switch (default_value.getClass().getSimpleName()) {
             case "Integer":
                 codec = Codec.INT;
@@ -48,7 +54,6 @@ public class NeptuneDataRegistry {
         }
         DataComponentType dataComponentType = NeptuneDataRegistry.registerDataComponentType(identifier, builder -> builder.codec((Codec<Object>) codec).packetCodec((PacketCodec<? super RegistryByteBuf, Object>) packetCodec));
         registry.put(identifier, dataComponentType);
-        return new NeptuneDataType<>(identifier, default_value);
     }
 
     public static <T> DataComponentType getFromType(NeptuneDataType<T> type) {

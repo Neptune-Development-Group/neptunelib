@@ -3,6 +3,7 @@ package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.worldgen.NeptuneOre;
+import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataRegistry;
 import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataType;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
@@ -40,6 +41,14 @@ public class NeptuneInitHandler {
                         neptuneOres.add(neptuneOre);
                         neptuneOre.generate();
                     }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (field.getType() == NeptuneDataType.class) {
+                try {
+                    NeptuneDataType neptuneDataType = (NeptuneDataType) field.get(null);
+                    NeptuneDataRegistry.register(neptuneDataType);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
