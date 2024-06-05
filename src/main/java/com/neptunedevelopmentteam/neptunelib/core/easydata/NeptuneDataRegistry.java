@@ -20,6 +20,7 @@ import java.util.function.UnaryOperator;
 public class NeptuneDataRegistry {
     private static final HashMap<Identifier, DataComponentType> registry = new HashMap<>();
 
+    // @TODO: Simplify this by inferring the identifier from the registration process
     public static <T> NeptuneDataType<T> create(@NotNull Identifier identifier, @NotNull T default_value) {
         if (registry.containsKey(identifier)) {
             throw new IllegalArgumentException("Identifier already registered: " + identifier);
