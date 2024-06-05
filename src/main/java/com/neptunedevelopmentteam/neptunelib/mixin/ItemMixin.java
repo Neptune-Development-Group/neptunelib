@@ -1,8 +1,11 @@
 package com.neptunedevelopmentteam.neptunelib.mixin;
 
+import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataSource;
+import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataType;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

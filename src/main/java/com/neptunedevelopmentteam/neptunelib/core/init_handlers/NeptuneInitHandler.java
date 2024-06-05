@@ -3,6 +3,7 @@ package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
 import com.neptunedevelopmentteam.neptunelib.core.blocksettings.NeptuneBlockSettings;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.worldgen.NeptuneOre;
+import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataType;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
 import com.neptunedevelopmentteam.neptunelib.interfaces.NeptuneBlock;
