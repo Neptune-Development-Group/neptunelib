@@ -63,6 +63,7 @@ public class NeptuneInitHandler {
      * @param  namespace   the namespace to register the fields into
      */
     public static <T> void register(Class<? extends ObjectInit<T>> clazz, String namespace) {
+        // @TODO: Make it so a list of classes are passed in the future, to simplify this even more, hell might as well rewrite this entire system, it is truly a mess
         Field[] allFields = clazz.getDeclaredFields();
         for (Field field : allFields) {
             // If the field's type is Item, then print it
