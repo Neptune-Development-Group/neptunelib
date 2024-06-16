@@ -25,7 +25,7 @@ public class NeptuneRecipe {
         } else if (recipeInput.getType() == RecipeType.SHAPELESS) {
             temp_identifier += "_shapeless";
         }
-        this.identifier = new Identifier(temp_identifier);
+        this.identifier = Identifier.of(temp_identifier);
     }
 
     public void build(RecipeExporter exporter) {

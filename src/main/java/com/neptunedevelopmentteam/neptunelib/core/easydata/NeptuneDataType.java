@@ -1,6 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.core.easydata;
 
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.util.Identifier;
 
 public class NeptuneDataType<A> {
@@ -21,7 +21,7 @@ public class NeptuneDataType<A> {
         return default_value;
     }
 
-    public DataComponentType getDataComponentType() {
+    public ComponentType getDataComponentType() {
         return NeptuneDataRegistry.getFromType(this);
     }
 }

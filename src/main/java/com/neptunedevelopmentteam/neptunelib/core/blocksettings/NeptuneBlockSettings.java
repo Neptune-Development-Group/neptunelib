@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -241,11 +240,6 @@ public class NeptuneBlockSettings {
 
     public NeptuneBlockSettings requires(FeatureFlag... features) {
         settings.requires(features);
-        return this;
-    }
-
-    public NeptuneBlockSettings instrument(Instrument instrument) {
-        settings.instrument(instrument);
         return this;
     }
 

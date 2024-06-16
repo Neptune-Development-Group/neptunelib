@@ -1,7 +1,7 @@
 package com.neptunedevelopmentteam.neptunelib.core.easydata;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.function.UnaryOperator;
 
 public class NeptuneDataRegistry {
-    private static final HashMap<Identifier, DataComponentType> registry = new HashMap<>();
+    private static final HashMap<Identifier, ComponentType> registry = new HashMap<>();
 
     // @TODO: Simplify this by inferring the identifier from the registration process
     public static <T> NeptuneDataType<T> create(@NotNull Identifier identifier, @NotNull T default_value) {
@@ -53,16 +53,16 @@ public class NeptuneDataRegistry {
             default:
                 throw new IllegalArgumentException("Unsupported default value type: " + default_value.getClass());
         }
-        DataComponentType dataComponentType = NeptuneDataRegistry.registerDataComponentType(identifier, builder -> builder.codec((Codec<Object>) codec).packetCodec((PacketCodec<? super RegistryByteBuf, Object>) packetCodec));
-        registry.put(identifier, dataComponentType);
+        ComponentType ComponentType = NeptuneDataRegistry.registerComponentType(identifier, builder -> builder.codec((Codec<Object>) codec).packetCodec((PacketCodec<? super RegistryByteBuf, Object>) packetCodec));
+        registry.put(identifier, ComponentType);
     }
 
-    public static <T> DataComponentType getFromType(NeptuneDataType<T> type) {
+    public static <T> ComponentType getFromType(NeptuneDataType<T> type) {
         return registry.get(type.getIdentifier());
     }
 
-    private static <T> DataComponentType<T> registerDataComponentType(Identifier identifier, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+    private static <T> ComponentType<T> registerComponentType(Identifier identifier, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         String id = identifier.toString().toLowerCase(Locale.ROOT);
-        return Registry.register(Registries.DATA_COMPONENT_TYPE, id,  (DataComponentType<T>) ((DataComponentType.Builder)builderOperator.apply(DataComponentType.builder())).build());
+        return Registry.register(Registries.DATA_COMPONENT_TYPE, id,  (ComponentType<T>) ((ComponentType.Builder)builderOperator.apply(ComponentType.builder())).build());
     }
 }

@@ -83,7 +83,7 @@ public class NeptuneInitHandler {
                             }
                         }
                     }
-                    Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), item);
+                    Registry.register(Registries.ITEM, Identifier.of(namespace, field_name_fixed), item);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -97,7 +97,7 @@ public class NeptuneInitHandler {
                         CustomName customName = field.getAnnotation(CustomName.class);
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
-                    Registry.register(Registries.BLOCK, new Identifier(namespace, field_name_fixed), block);
+                    Registry.register(Registries.BLOCK, Identifier.of(namespace, field_name_fixed), block);
                     if (block_settings.__has_a_block_item) {
                         NeptuneItemSettings item_settings = block_settings.item_settings;
 
@@ -109,7 +109,7 @@ public class NeptuneInitHandler {
                                 }
                             }
                         }
-                        Registry.register(Registries.ITEM, new Identifier(namespace, field_name_fixed), block_item);
+                        Registry.register(Registries.ITEM, Identifier.of(namespace, field_name_fixed), block_item);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -142,7 +142,7 @@ public class NeptuneInitHandler {
                         CustomName customName = field.getAnnotation(CustomName.class);
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
-                    Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(namespace, field_name_fixed), blockEntityType);
+                    Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(namespace, field_name_fixed), blockEntityType);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -155,7 +155,7 @@ public class NeptuneInitHandler {
                         CustomName customName = field.getAnnotation(CustomName.class);
                         field_name_fixed = customName.value().toLowerCase(Locale.ROOT);
                     }
-                    Registry.register(Registries.ENTITY_TYPE, new Identifier(namespace, field_name_fixed), entityType);
+                    Registry.register(Registries.ENTITY_TYPE, Identifier.of(namespace, field_name_fixed), entityType);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

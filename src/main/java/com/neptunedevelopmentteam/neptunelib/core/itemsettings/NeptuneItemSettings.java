@@ -3,7 +3,7 @@ package com.neptunedevelopmentteam.neptunelib.core.itemsettings;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
 import net.fabricmc.fabric.api.item.v1.CustomDamageHandler;
 import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
@@ -74,7 +74,7 @@ public class NeptuneItemSettings extends Item.Settings {
     }
 
     @Override
-    public <T> NeptuneItemSettings component(DataComponentType<T> type, T value) {
+    public <T> NeptuneItemSettings component(ComponentType<T> type, T value) {
         return (NeptuneItemSettings) super.component(type, value);
     }
 
