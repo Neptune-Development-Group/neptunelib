@@ -49,6 +49,8 @@ jobs:
 
       - name: Commit Changes
         run: |
+          set -e
+          cd $GITHUB_WORKSPACE/${{github.repository}}.wiki
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
