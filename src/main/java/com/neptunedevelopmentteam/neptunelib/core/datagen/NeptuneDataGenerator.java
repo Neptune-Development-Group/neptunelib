@@ -3,13 +3,12 @@ package com.neptunedevelopmentteam.neptunelib.core.datagen;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.recipe.NeptuneRecipe;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.sound.NeptuneSound;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneTranslation;
-import com.neptunedevelopmentteam.neptunelib.core.init_handlers.NeptuneInitHandler;
 import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
+import com.neptunedevelopmentteam.neptunelib.core.registration.NeptuneRegistrationDatagenHookupManager;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
 public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntrypoint{
@@ -46,13 +45,12 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
         this.addTranslation(itemGroup.getTranslationKey(), translations);
     }
 
-    public void addSound(NeptuneSound neptuneSound) {
-        this.handler.addSound(neptuneSound);
-    }
-
     @Override
     public void buildRegistry(RegistryBuilder registryBuilder) {
-        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NeptuneInitHandler::bootstrap_configured_feature_ores);
-        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NeptuneInitHandler::bootstrap_placeable_feature_ores);
+        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NeptuneRegistrationDatagenHookupManager::bootstrap_configured_feature_ores);
+        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NeptuneRegistrationDatagenHookupManager::bootstrap_placeable_feature_ores);
+        for (NeptuneSound sound : NeptuneRegistrationDatagenHookupManager.getSounds()) {
+            this.handler.addSound(sound);
+        }
     }
 }

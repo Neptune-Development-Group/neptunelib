@@ -1,7 +1,7 @@
 package com.neptunedevelopmentteam.neptunelib.config;
 
 import com.neptunedevelopmentteam.neptunelib.Neptunelib;
-import com.neptunedevelopmentteam.neptunelib.core.init_handlers.CustomName;
+import com.neptunedevelopmentteam.neptunelib.core.registration.annotations.CustomName;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.File;

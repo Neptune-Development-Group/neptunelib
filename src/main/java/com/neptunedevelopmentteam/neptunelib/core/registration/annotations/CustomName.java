@@ -1,9 +1,7 @@
-package com.neptunedevelopmentteam.neptunelib.core.init_handlers;
+package com.neptunedevelopmentteam.neptunelib.core.registration.annotations;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 
 @Retention(RetentionPolicy.RUNTIME)
