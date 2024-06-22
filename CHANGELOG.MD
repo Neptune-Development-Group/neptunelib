@@ -1,4 +1,4 @@
-# 2.0.1
+# 2.0.1 - 2.0.2
 - Hopefully fixed a bug stopping the registration system from working
 
 # 2.0.0

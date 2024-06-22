@@ -28,12 +28,12 @@ public class NeptuneRegistrationManager {
             Method registerMethod = clazz.getMethod("register", firstField.getType(), Field.class, String.class);
             for (Field field: allFields) {
                 T object = (T) field.get(null);
-                registerMethod.invoke(null, object, field, namespace);
+                registerMethod.invoke(clazz.newInstance(), object, field, namespace);
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
             throw new RuntimeException("Could not find register method in class " + clazz.getName());
-        } catch (InvocationTargetException | IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new RuntimeException(e);
         }
     }
