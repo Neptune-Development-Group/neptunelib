@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import java.util.function.Supplier;
 
 public interface NeptuneItemRegistrationType extends NeptuneEasyRegistrationType<Item> {
-    static void register(Item object, Field fieldSource, String namespace) {
+    default void register(Item object, Field fieldSource, String namespace) {
         String name = NeptuneEasyRegistrationType.getName(fieldSource);
         if (object instanceof NeptuneItem neptuneItem) {
             NeptuneItemSettings neptuneItemSettings = neptuneItem.neptunelib$getSettings();

@@ -1,3 +1,6 @@
+# 2.0.1
+- Hopefully fixed a bug stopping the registration system from working
+
 # 2.0.0
 - Rewrote major systems of the mod from scratch, primarily the Easy Registration system
 - Removed support for Block Entities and Entities with this system as I don't like how it works and I haven't decided how to do it yet

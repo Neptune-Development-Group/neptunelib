@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 public interface NeptuneOreRegistrationType extends NeptuneEasyRegistrationType<NeptuneOre> {
 
-    static void register(NeptuneOre object, Field fieldSource, String namespace) {
+    default void register(NeptuneOre object, Field fieldSource, String namespace) {
         NeptuneRegistrationDatagenHookupManager.addNeptuneOre(object);
         object.generate();
     }

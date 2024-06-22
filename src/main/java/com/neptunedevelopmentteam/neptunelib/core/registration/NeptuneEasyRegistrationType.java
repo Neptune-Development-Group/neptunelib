@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 public interface NeptuneEasyRegistrationType<T> {
 
-    static <T> void register(T object, Field fieldSource, String namespace) {
+    default <T> void register(T object, Field fieldSource, String namespace) {
         throw new NotImplementedException("Must be implemented through child interface");
     }
 
