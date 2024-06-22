@@ -42,9 +42,9 @@ jobs:
       - name: Replace wiki keyword with link
         uses: jacobtomlinson/gha-find-replace@v3
         with:
-          find: "%wiki%"
+          find: "\%wiki\%"
           replace: "https://github.com/${{github.repository}}/wiki"
-          regex: false
+          regex: true
           include: "${{github.repository}}.wiki"
 
       - name: Commit Changes
