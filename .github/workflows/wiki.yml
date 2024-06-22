@@ -40,12 +40,11 @@ jobs:
           cp -r $GITHUB_WORKSPACE/${{github.repository}}/wiki/* .
 
       - name: Replace wiki keyword with link
-        uses: jacobtomlinson/gha-find-replace@v3
+        uses: richardrigutins/replace-in-files@v2
         with:
-          find: "\%wiki\%"
-          replace: "https://github.com/${{github.repository}}/wiki"
-          regex: true
-          include: "${{github.repository}}.wiki"
+          files: "${{github.repository}}.wiki/*.md"
+          search-text: "%wiki%"
+          replacement-text: "https://github.com/${{github.repository}}/wiki"
 
       - name: Commit Changes
         run: |
