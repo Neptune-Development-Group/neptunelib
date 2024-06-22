@@ -31,12 +31,24 @@ jobs:
           repository: ${{github.repository}}.wiki
           path: ${{github.repository}}.wiki
 
-      - name: Push to wiki
+
+      - name: Copy wiki files to Github Wiki
         run: |
           set -e
           cd $GITHUB_WORKSPACE/${{github.repository}}.wiki
           rm *
           cp -r $GITHUB_WORKSPACE/${{github.repository}}/wiki/* .
+
+      - name: Replace wiki keyword with link
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "%wiki%"
+          replace: "https://github.com/${{github.repository}}/wiki"
+          regex: false
+          include: "${{github.repository}}.wiki"
+
+      - name: Commit Changes
+        run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
