@@ -1,4 +1,5 @@
-name: Auto Github Wiki
+---
+name: GitHub Wiki upload
 
 on:
   push:
@@ -15,14 +16,15 @@ permissions:
 
 jobs:
   wiki:
-    name: Publish to Github Wiki
+    name: Publish to GitHub Wiki
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           repository: ${{github.repository}}
-          path: ${{github.repository}
+          path: ${{github.repository}}
+
       - name: Checkout Wiki
         uses: actions/checkout@v4
         with:
@@ -34,7 +36,7 @@ jobs:
           set -e
           cd $GITHUB_WORKSPACE/${{github.repository}}.wiki
           cp -r $GITHUB_WORKSPACE/${{github.repository}}/wiki/* .
-          git config --local user.email "actions@github.com"
-          git config --local user.name "Github Action"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add .
-          git diff-index --quiet HEAD || git commit -m "action: wiki sync"" && git push
+          git diff-index --quiet HEAD || git commit -m "action: wiki sync" && git push
