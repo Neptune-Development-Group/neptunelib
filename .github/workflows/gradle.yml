@@ -1,6 +1,10 @@
 name: Publish on GitHub
 
-on: [ pull_request, workflow_dispatch, push ]
+on:
+  push:
+    branches:
+      - master
+    paths: [src/**, .github/workflows/gradle.yml, gradle/**, build.gradle, gradle.properties, jitpack.yml, settings.gradle, README.md, CHANGELOG.MD]
 
 env:
   JAVA_VERSION: 21
