@@ -35,6 +35,7 @@ jobs:
         run: |
           set -e
           cd $GITHUB_WORKSPACE/${{github.repository}}.wiki
+          rm *
           cp -r $GITHUB_WORKSPACE/${{github.repository}}/wiki/* .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
