@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public class NeptuneSound {
     private final SoundEvent sound_event;
@@ -15,7 +16,7 @@ public class NeptuneSound {
     private float volume = 1.0f;
     private boolean stream = false; // Set to true if it's for music
     private int attenuation_distance = 16;
-    public NeptuneSound(Identifier sound_group_identifier, Identifier... sound_paths) {
+    public NeptuneSound(Identifier sound_group_identifier, @NotNull Identifier... sound_paths) {
         this.sound_event = SoundEvent.of(sound_group_identifier);
         this.subtitle_translation_key = "sound." + sound_group_identifier.getNamespace() + "." + sound_group_identifier.getPath();
         this.sound_identifier = sound_group_identifier;

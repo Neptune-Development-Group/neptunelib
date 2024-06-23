@@ -50,6 +50,18 @@ public class NeptuneDataRegistry {
                 codec = Codec.STRING;
                 packetCodec = PacketCodecs.STRING;
                 break;
+            case "Double":
+                codec = Codec.DOUBLE;
+                packetCodec = PacketCodecs.DOUBLE;
+                break;
+            case "Long":
+                codec = Codec.LONG;
+                packetCodec = PacketCodecs.VAR_LONG;
+                break;
+            case "Byte":
+                codec = Codec.BYTE;
+                packetCodec = PacketCodecs.BYTE;
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported default value type: " + default_value.getClass());
         }
