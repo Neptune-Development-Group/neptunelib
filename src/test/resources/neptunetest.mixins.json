@@ -1,13 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.neptunedevelopmentteam.neptunelib.mixin",
+  "package": "com.neptunedevelopmentteam.neptunetest.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "BlockMixin",
-    "ItemMixin",
-    "ItemStackMixin",
-    "WorldMixin"
+
   ],
   "client": [
   ],

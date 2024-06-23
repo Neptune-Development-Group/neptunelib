@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -23,6 +23,31 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    testImplementation sourceSets.main.output
+}
+
+sourceSets {
+    test {
+        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.compileClasspath
+    }
+}
+
+loom {
+    runs {
+        testClient {
+            client()
+            ideConfigGenerated project.rootProject == project
+            name = "test Client"
+            source sourceSets.test
+        }
+        testServer {
+            server()
+            ideConfigGenerated project.rootProject == project
+            name = "test Server"
+            source sourceSets.test
+        }
+    }
 }
 
 processResources {
@@ -37,6 +62,8 @@ processResources {
                 "loader_version": project.loader_version
     }
 }
+
+
 def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "neptunetest",
+  "version": "1.0.0",
+  "name": "neptunetest",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Neptune-Development-Group/neptunelib"
+  },
+  "license": "Apache-2.0",
+  "icon": "assets/neptunetest/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.neptunedevelopmentteam.neptunetest.client.NeptuneTestClient"
+    ],
+    "main": [
+      "com.neptunedevelopmentteam.neptunetest.NeptuneTest"
+    ]
+  },
+  "mixins": [
+    "neptunetest.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "*",
+    "neptunelib": "*"
+  }
+}
