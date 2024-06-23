@@ -26,7 +26,7 @@ public class NeptuneBlockSettings {
     public Boolean __has_a_block_item = false;
     private AbstractBlock.Settings settings;
 
-    public NeptuneBlockSettings(AbstractBlock.Settings settings) {
+    private NeptuneBlockSettings(AbstractBlock.Settings settings) {
         this.settings = settings;
     }
 

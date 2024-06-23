@@ -25,7 +25,7 @@ public class BlockMixin implements NeptuneBlock {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(AbstractBlock.Settings settings, CallbackInfo ci) {
-        this.neptuneBlockSettings = new NeptuneBlockSettings(settings);
+        this.neptuneBlockSettings = NeptuneBlockSettings.create(settings);
     }
 
     @Override
