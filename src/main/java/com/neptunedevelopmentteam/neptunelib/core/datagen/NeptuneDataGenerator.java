@@ -12,11 +12,12 @@ import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 
 public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntrypoint{
-    NeptuneDatagenHandler handler; // Might have to make this a supplier, just in case it's null
-
+    private NeptuneDatagenHandler handler; // Might have to make this a supplier, just in case it's null
+    public FabricDataGenerator fabricDataGenerator;
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         this.handler = NeptuneDatagenHandler.register(fabricDataGenerator);
+        this.fabricDataGenerator = fabricDataGenerator;
         this.onInit();
         handler.generate();
     }
@@ -52,5 +53,6 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
         for (NeptuneSound sound : NeptuneRegistrationDatagenHookupManager.getSounds()) {
             this.handler.addSound(sound);
         }
+        onRegistryBuild(registryBuilder);
     }
 }

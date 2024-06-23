@@ -33,38 +33,38 @@ public class NeptuneDataRegistry {
         PacketCodec<?, ?> packetCodec;
         var default_value = type.getDefaultValue();
         Identifier identifier = type.getIdentifier();
-        switch (default_value.getClass().getSimpleName()) {
-            case "Integer":
+        packetCodec = switch (default_value.getClass().getSimpleName()) {
+            case "Integer" -> {
                 codec = Codec.INT;
-                packetCodec = PacketCodecs.VAR_INT;
-                break;
-            case "Float":
+                yield PacketCodecs.VAR_INT;
+            }
+            case "Float" -> {
                 codec = Codec.FLOAT;
-                packetCodec = PacketCodecs.FLOAT;
-                break;
-            case "Boolean":
+                yield PacketCodecs.FLOAT;
+            }
+            case "Boolean" -> {
                 codec = Codec.BOOL;
-                packetCodec = PacketCodecs.BOOL;
-                break;
-            case "String":
+                yield PacketCodecs.BOOL;
+            }
+            case "String" -> {
                 codec = Codec.STRING;
-                packetCodec = PacketCodecs.STRING;
-                break;
-            case "Double":
+                yield PacketCodecs.STRING;
+            }
+            case "Double" -> {
                 codec = Codec.DOUBLE;
-                packetCodec = PacketCodecs.DOUBLE;
-                break;
-            case "Long":
+                yield PacketCodecs.DOUBLE;
+            }
+            case "Long" -> {
                 codec = Codec.LONG;
-                packetCodec = PacketCodecs.VAR_LONG;
-                break;
-            case "Byte":
+                yield PacketCodecs.VAR_LONG;
+            }
+            case "Byte" -> {
                 codec = Codec.BYTE;
-                packetCodec = PacketCodecs.BYTE;
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported default value type: " + default_value.getClass());
-        }
+                yield PacketCodecs.BYTE;
+            }
+            default ->
+                    throw new IllegalArgumentException("Unsupported default value type: " + default_value.getClass());
+        };
         ComponentType ComponentType = NeptuneDataRegistry.registerComponentType(identifier, builder -> builder.codec((Codec<Object>) codec).packetCodec((PacketCodec<? super RegistryByteBuf, Object>) packetCodec));
         registry.put(identifier, ComponentType);
     }

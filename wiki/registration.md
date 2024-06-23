@@ -3,6 +3,37 @@
 Neptunelib allows simple and easy registration of various things, even some things that you normally don't register in the typical fashion.
 
 All you have to do is create a class and implement one of the existing easy registration types, or even create your [own](%wiki%/custom_registration_types).
+
+All the below require that you register the registration class that you're using for each type inside your mod's server sided `onInitialize` function in your main class
+````java
+package com.neptunedevelopmentteam.neptunetest;
+
+import com.neptunedevelopmentteam.neptunelib.core.itemgroup.NeptuneItemGroup;
+import com.neptunedevelopmentteam.neptunelib.core.registration.NeptuneEasyRegistrationType;
+import com.neptunedevelopmentteam.neptunelib.core.registration.NeptuneRegistrationManager;
+import com.neptunedevelopmentteam.neptunetest.registration.*;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.util.Identifier;
+
+public class NeptuneTest implements ModInitializer {
+    ...
+    @Override
+    public void onInitialize() {
+        System.out.println("Test booting...");
+        NeptuneRegistrationManager.setup("neptunetest",
+                TestBlocks.class,
+                TestItems.class,
+                TestOres.class,
+                TestDataTypes.class,
+                TestSounds.class
+        );
+        // If you have a custom item group, initialize it after the previous function
+        ...
+    }
+}
+
+````
+
 ## Item Registration
 Supports the `CustomName` annotation to set a custom name.
 

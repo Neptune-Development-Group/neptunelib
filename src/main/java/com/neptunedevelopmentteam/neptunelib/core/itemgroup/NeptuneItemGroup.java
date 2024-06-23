@@ -39,7 +39,7 @@ public class NeptuneItemGroup {
         this.display_name = Text.translatable(getTranslationKey());
     }
 
-    public void onInitialize() {
+    private void onInitialize() {
         group = FabricItemGroup.builder()
                 .icon(() -> icon)
                 .displayName(display_name)
