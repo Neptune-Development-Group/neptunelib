@@ -55,6 +55,7 @@ jobs:
           github-token: "${{secrets.GITHUB_TOKEN}}"
 
           github-generate-changelog: true
+          changelog-file: CHANGELOG.md
           version-type: release
 
           loaders: fabric
