@@ -1,3 +1,9 @@
+# 2.1.0
+- Fixed a few bugs
+- Partially rewrote the data system to allow for custom data types (I'll add to the wiki about how to do that soon)
+- Updated the wiki to reflect the new way to register data types (Simplified from the old way)
+- For custom data types you now require an Encoder/Decoder class, as before that'll be added to the wiki soon
+
 # 2.0.1 - 2.0.2
 - Hopefully fixed a bug stopping the registration system from working
 

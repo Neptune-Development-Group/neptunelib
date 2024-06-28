@@ -3,6 +3,7 @@ package com.neptunedevelopmentteam.neptunelib.core.registration;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 public interface NeptuneEasyRegistrationType<T> {
 
@@ -11,7 +12,8 @@ public interface NeptuneEasyRegistrationType<T> {
     }
 
     static String getName(Field fieldSource) {
-        return NeptuneRegistrationManager.getCustomNameFromField(fieldSource);
+        String name = NeptuneRegistrationManager.getCustomNameFromField(fieldSource);
+        return name.toLowerCase(Locale.ROOT);
     }
 
 }

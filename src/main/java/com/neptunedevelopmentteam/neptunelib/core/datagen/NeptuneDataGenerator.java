@@ -20,6 +20,9 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
         this.fabricDataGenerator = fabricDataGenerator;
         this.onInit();
         handler.generate();
+        for (NeptuneSound sound : NeptuneRegistrationDatagenHookupManager.getSounds()) {
+            this.handler.addSound(sound);
+        }
     }
 
     public void addRecipe(NeptuneRecipe recipe) {
@@ -50,9 +53,6 @@ public abstract class NeptuneDataGenerator implements NeptuneDataGeneratorEntryp
     public void buildRegistry(RegistryBuilder registryBuilder) {
         registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, NeptuneRegistrationDatagenHookupManager::bootstrap_configured_feature_ores);
         registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, NeptuneRegistrationDatagenHookupManager::bootstrap_placeable_feature_ores);
-        for (NeptuneSound sound : NeptuneRegistrationDatagenHookupManager.getSounds()) {
-            this.handler.addSound(sound);
-        }
         onRegistryBuild(registryBuilder);
     }
 }

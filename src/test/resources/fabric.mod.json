@@ -17,6 +17,9 @@
     ],
     "main": [
       "com.neptunedevelopmentteam.neptunetest.NeptuneTest"
+    ],
+    "fabric-datagen": [
+      "com.neptunedevelopmentteam.neptunetest.NeptuneTestDataGenerator"
     ]
   },
   "mixins": [

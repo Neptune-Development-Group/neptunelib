@@ -16,7 +16,7 @@ public class TestOres implements NeptuneOreRegistrationType {
     );
 
     public static final NeptuneOre DEEPSLATE_TEST_ORE = NeptuneOre.createDeepslateOverworldOre(
-            Identifier.of("neptunetest", "test_ore"),
+            Identifier.of("neptunetest", "deepslate_test_ore"),
             TestBlocks.TEST_ORE_BLOCK,
             50,
             -50,

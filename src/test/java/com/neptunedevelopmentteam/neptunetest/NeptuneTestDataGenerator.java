@@ -48,12 +48,12 @@ public class NeptuneTestDataGenerator extends NeptuneDataGenerator {
                 new RecipeOutput(TestItems.TEST_ITEM, 1)
         );
         this.addRecipe(shaped_recipe);
-        NeptuneRecipe shapeless_recipe = new NeptuneRecipe(
-                RecipeCategory.MISC,
-                RecipeInput.createShapelessRecipe(TestItems.TEST_ITEM, TestItems.OTHER_ITEM),
-                new RecipeOutput(TestBlocks.TEST_BLOCK_WITH_ITEM.asItem(), 1)
-        );
-        this.addRecipe(shapeless_recipe);
+//        NeptuneRecipe shapeless_recipe = new NeptuneRecipe(
+//                RecipeCategory.MISC,
+//                RecipeInput.createShapelessRecipe(TestItems.TEST_ITEM, TestItems.OTHER_ITEM),
+//                new RecipeOutput(TestBlocks.TEST_BLOCK_WITH_ITEM.asItem(), 1)
+//        );
+//        this.addRecipe(shapeless_recipe);
 
     }
 }

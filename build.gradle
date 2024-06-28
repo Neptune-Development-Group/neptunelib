@@ -47,10 +47,23 @@ loom {
             name = "test Server"
             source sourceSets.test
         }
+        testDatagen {
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/test/neptunetest/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=neptunetest"
+            ideConfigGenerated project.rootProject == project
+            name = "test data gen"
+            source sourceSets.test
+
+            runDir "build/datagen"
+        }
     }
 }
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // Exclude duplicate files, I don't why this even works
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
