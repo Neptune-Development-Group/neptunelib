@@ -1,7 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.core.blocksettings;
 
 import com.neptunedevelopmentteam.neptunelib.core.itemsettings.NeptuneItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -144,11 +143,6 @@ public class NeptuneBlockSettings {
 
     public NeptuneBlockSettings dropsNothing() {
         settings.dropsNothing();
-        return this;
-    }
-
-    public NeptuneBlockSettings dropsLike(Block source) {
-        settings.dropsLike(source);
         return this;
     }
 

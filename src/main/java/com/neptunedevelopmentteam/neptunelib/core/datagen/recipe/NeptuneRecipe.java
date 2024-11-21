@@ -5,6 +5,9 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
@@ -30,7 +33,7 @@ public class NeptuneRecipe {
 
     public void build(RecipeExporter exporter) {
         if (recipeInput.getType() == RecipeType.SHAPED) {
-            ShapedRecipeJsonBuilder builder = ShapedRecipeJsonBuilder.create(category, recipeOutput.getItem(), recipeOutput.getAmount());
+            ShapedRecipeJsonBuilder builder = ShapedRecipeJsonBuilder.create(Registries.ITEM,category, recipeOutput.getItem(), recipeOutput.getAmount());
             HashMap<ItemConvertible, Character> characterHashMap = new HashMap<>();
             for (int i = 0; i < recipeInput.getInputs().toArray().length; i++) {
                 if (characterHashMap.containsKey(recipeInput.getInputs().get(i))) { continue; }
@@ -52,13 +55,17 @@ public class NeptuneRecipe {
             pattern3 += characterHashMap.getOrDefault(recipeInput.getRow_3().getItem_3(), ' ');
             builder.pattern(pattern1).pattern(pattern2).pattern(pattern3);
             characterHashMap.forEach((ingredient, character) -> builder.criterion(NeptuneRecipeProvider.hasItem(ingredient), NeptuneRecipeProvider.conditionsFromItem(ingredient)));
-            builder.offerTo(exporter, identifier);
+            builder.offerTo(exporter);
         }
         else if (recipeInput.getType() == RecipeType.SHAPELESS) {
-            ShapelessRecipeJsonBuilder builder = ShapelessRecipeJsonBuilder.create(category, recipeOutput.getItem(), recipeOutput.getAmount());
+            ShapelessRecipeJsonBuilder builder = ShapelessRecipeJsonBuilder.create(Registries.ITEM,category, recipeOutput.getItem(), recipeOutput.getAmount());
             recipeInput.getShapelessItems().forEach(item -> builder.criterion(NeptuneRecipeProvider.hasItem(item), NeptuneRecipeProvider.conditionsFromItem(item)));
             recipeInput.getShapelessItems().forEach(builder::input);
-            builder.offerTo(exporter, identifier);
+            builder.offerTo(exporter);
         }
+    }
+
+    public Identifier getIdentifier() {
+        return identifier;
     }
 }

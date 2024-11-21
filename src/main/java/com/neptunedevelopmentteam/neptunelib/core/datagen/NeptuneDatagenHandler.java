@@ -8,6 +8,7 @@ import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneLan
 import com.neptunedevelopmentteam.neptunelib.core.datagen.translation.NeptuneTranslation;
 import com.neptunedevelopmentteam.neptunelib.core.datagen.worldgen.NeptuneWorldGenProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -19,10 +20,10 @@ import java.util.HashMap;
 public class NeptuneDatagenHandler {
     private final String mod_id;
     private FabricDataGenerator fabricDataGenerator;
-    private static  HashMap<String, NeptuneDatagenHandler> datagenHandlers = new HashMap<>();
-    private NeptuneLanguageProvider languageProvider;
-    private NeptuneSoundProvider soundProvider;
-    private NeptuneRecipeProvider recipeProvider;
+    private static final HashMap<String, NeptuneDatagenHandler> datagenHandlers = new HashMap<>();
+    private final NeptuneLanguageProvider languageProvider;
+    private final NeptuneSoundProvider soundProvider;
+    private final NeptuneRecipeProvider recipeProvider;
     public static NeptuneDatagenHandler register(FabricDataGenerator fabricDataGenerator) {
         datagenHandlers.put(fabricDataGenerator.getModId(), new NeptuneDatagenHandler(fabricDataGenerator));
         return get(fabricDataGenerator.getModId());
