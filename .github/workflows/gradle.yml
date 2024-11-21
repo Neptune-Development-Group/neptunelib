@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths: [src/**, .github/workflows/gradle.yml, gradle/**, build.gradle, gradle.properties, jitpack.yml, settings.gradle, README.md, CHANGELOG.MD]
+    paths: [ src/**, .github/workflows/gradle.yml, gradle/**, build.gradle, gradle.properties, jitpack.yml, settings.gradle, README.md, CHANGELOG.md ]
 
 env:
   JAVA_VERSION: 21
@@ -55,7 +55,7 @@ jobs:
           github-token: "${{secrets.GITHUB_TOKEN}}"
 
           github-generate-changelog: true
-          changelog-file: CHANGELOG.md
+          changelog-file: 'CHANGELOG.md'
           version-type: release
 
           loaders: fabric
