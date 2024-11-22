@@ -1,8 +1,13 @@
+# 2.3.1
+- Added `BlockPos` as a supported datatype
+- Correctly implemented `Identifier` as before I made a custom codec, but I found out one already exists
+
 # 2.3.0
 - Added support for Block Entities with Easy Data
 
 # 2.2.0
 - Added `Identifier` as a supported datatype
+- Reworked the library to workin 1.21.3
 
 # 2.1.0
 - Fixed a few bugs

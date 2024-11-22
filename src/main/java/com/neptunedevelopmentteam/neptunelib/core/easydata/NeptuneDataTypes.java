@@ -4,10 +4,13 @@ import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
 
 import java.nio.ByteBuffer;
 
 public interface NeptuneDataTypes {
+    // https://wiki.fabricmc.net/tutorial:codec
     static NeptuneDataType<Integer> INTEGER(int default_value) {
         return new NeptuneDataType<>(default_value, Codec.INT, PacketCodecs.INTEGER);
     }
@@ -45,6 +48,10 @@ public interface NeptuneDataTypes {
     }
 
     static NeptuneDataType<Identifier> IDENTIFIER(Identifier default_value) {
-        return new NeptuneDataType<>(default_value, Codec.STRING, PacketCodecs.STRING);
+        return new NeptuneDataType<>(default_value, Identifier.CODEC, Identifier.PACKET_CODEC);
+    }
+
+    static NeptuneDataType<BlockPos> BLOCK_POS(BlockPos default_value) {
+        return new NeptuneDataType<>(default_value, BlockPos.CODEC, BlockPos.PACKET_CODEC);
     }
 }

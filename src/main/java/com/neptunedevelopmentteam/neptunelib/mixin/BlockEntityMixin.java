@@ -22,7 +22,7 @@ public abstract class BlockEntityMixin implements NeptuneDataSource {
         if (components.contains(type.getDataComponentType())) {
             return (A) components.get(type.getDataComponentType());
         }
-        return NeptuneDataSource.super.neptunelib$getData(type);
+        return type.getDefaultValue();
     }
 
     @Unique

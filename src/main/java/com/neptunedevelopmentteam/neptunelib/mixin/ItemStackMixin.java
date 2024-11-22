@@ -25,26 +25,12 @@ public abstract class ItemStackMixin implements NeptuneDataSource, ComponentHold
     @Unique
     @Override
     public <T> void neptunelib$setData(NeptuneDataType<T> type, T data) {
-        if (data instanceof Identifier) {
-            this.set(type.getDataComponentType(), ((Identifier) data).toString());
-        }
-        else {
-            this.set(type.getDataComponentType(), data);
-        }
+        this.set(type.getDataComponentType(), data);
     }
 
     @Unique
     @Override
     public <A> A neptunelib$getData(NeptuneDataType<A> type) {
-        if (type.getDefaultValue() instanceof Identifier) {
-            try {
-                return (A) Identifier.tryParse((String) this.get(type.getDataComponentType()));
-            } catch (Exception e) {
-                Neptunelib.LOGGER.error("Error parsing {} from {}", type.getIdentifier(), this.getComponents().get(type.getDataComponentType()), e);
-                return type.getDefaultValue();
-            }
-
-        }
         return (A) this.get(type.getDataComponentType());
     }
 }
