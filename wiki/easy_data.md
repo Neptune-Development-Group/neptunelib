@@ -67,3 +67,8 @@ public class TestDataItem extends Item implements NeptuneItemDataImpl {
 }
 
 ```
+
+## Block Entities
+```java
+// No example code yet, but you can implement `NeptuneBlockEntityDataImpl` if you want to use it
+```

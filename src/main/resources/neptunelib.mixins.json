@@ -4,6 +4,7 @@
   "package": "com.neptunedevelopmentteam.neptunelib.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlockEntityMixin",
     "BlockMixin",
     "ItemMixin",
     "ItemStackMixin",

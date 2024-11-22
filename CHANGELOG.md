@@ -1,3 +1,6 @@
+# 2.3.0
+- Added support for Block Entities with Easy Data
+
 # 2.2.0
 - Added `Identifier` as a supported datatype
 
