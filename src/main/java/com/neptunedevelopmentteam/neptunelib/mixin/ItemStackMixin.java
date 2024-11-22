@@ -1,5 +1,6 @@
 package com.neptunedevelopmentteam.neptunelib.mixin;
 
+import com.neptunedevelopmentteam.neptunelib.Neptunelib;
 import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataSource;
 import com.neptunedevelopmentteam.neptunelib.core.easydata.NeptuneDataType;
 import net.minecraft.component.ComponentHolder;
@@ -7,6 +8,7 @@ import net.minecraft.component.ComponentMap;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,12 +25,26 @@ public abstract class ItemStackMixin implements NeptuneDataSource, ComponentHold
     @Unique
     @Override
     public <T> void neptunelib$setData(NeptuneDataType<T> type, T data) {
-        this.set(type.getDataComponentType(), data);
+        if (data instanceof Identifier) {
+            this.set(type.getDataComponentType(), ((Identifier) data).toString());
+        }
+        else {
+            this.set(type.getDataComponentType(), data);
+        }
     }
 
     @Unique
     @Override
     public <A> A neptunelib$getData(NeptuneDataType<A> type) {
+        if (type.getDefaultValue() instanceof Identifier) {
+            try {
+                return (A) Identifier.tryParse((String) this.get(type.getDataComponentType()));
+            } catch (Exception e) {
+                Neptunelib.LOGGER.error("Error parsing {} from {}", type.getIdentifier(), this.getComponents().get(type.getDataComponentType()), e);
+                return type.getDefaultValue();
+            }
+
+        }
         return (A) this.get(type.getDataComponentType());
     }
 }

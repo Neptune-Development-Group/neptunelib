@@ -1,3 +1,6 @@
+# 2.2.0
+- Added `Identifier` as a supported datatype
+
 # 2.1.0
 - Fixed a few bugs
 - Partially rewrote the data system to allow for custom data types (I'll add to the wiki about how to do that soon)

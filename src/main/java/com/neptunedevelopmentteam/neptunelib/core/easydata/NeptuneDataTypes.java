@@ -3,6 +3,7 @@ package com.neptunedevelopmentteam.neptunelib.core.easydata;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.util.Identifier;
 
 import java.nio.ByteBuffer;
 
@@ -41,5 +42,9 @@ public interface NeptuneDataTypes {
 
     static NeptuneDataType<Short> SHORT(short default_value) {
         return new NeptuneDataType<>(default_value, Codec.SHORT, PacketCodecs.SHORT);
+    }
+
+    static NeptuneDataType<Identifier> IDENTIFIER(Identifier default_value) {
+        return new NeptuneDataType<>(default_value, Codec.STRING, PacketCodecs.STRING);
     }
 }

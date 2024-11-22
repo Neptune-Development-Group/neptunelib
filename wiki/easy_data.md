@@ -13,6 +13,7 @@ Supported data types are:
 - String
 - Long
 - long
+- Identifier
 - Byte (Pretty much everything can be converted to this, so it's for anything that isn't supported)
 
 On how to register data types check out this [page](%wiki%/registration#data-type-registration-for-nbt-components)
