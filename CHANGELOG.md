@@ -1,3 +1,7 @@
+# 2.4.0
+- Added support for custom data types out of the normally supported Minecraft ones
+- 
+
 # 2.3.1
 - Added `BlockPos` as a supported datatype
 - Correctly implemented `Identifier` as before I made a custom codec, but I found out one already exists
