@@ -6,8 +6,10 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 import java.nio.ByteBuffer;
+import java.util.UUID;
 
 public interface NeptuneDataTypes {
     // https://wiki.fabricmc.net/tutorial:codec
@@ -54,4 +56,10 @@ public interface NeptuneDataTypes {
     static NeptuneDataType<BlockPos> BLOCK_POS(BlockPos default_value) {
         return new NeptuneDataType<>(default_value, BlockPos.CODEC, BlockPos.PACKET_CODEC);
     }
+
+    static NeptuneDataType<UUID> UUID(UUID default_value) {
+        return new NeptuneDataType<>(default_value, NeptuneCodecs.UUID_CODEC, NeptuneCodecs.UUID_PACKET_CODEC);
+    }
+
+    // add vec3d later
 }
