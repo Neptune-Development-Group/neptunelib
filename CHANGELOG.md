@@ -1,3 +1,9 @@
+# 2.5.0
+- Moved PacketCodecs to their own class
+- Made it so you can register custom data types
+- Made a custom data holder type, but probably isn't going to be used until I have some better way of using it
+- Data holder works now
+
 # 2.4.0
 - Added support for custom data types out of the normally supported Minecraft ones
 - 

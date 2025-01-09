@@ -17,10 +17,11 @@ public class NeptuneData<T> {
         return value;
     }
 
-    public void setValue(Object value) {
+    public NeptuneData<T> setValue(Object value) {
         if (value.getClass() != type.getDefaultValue().getClass()) {
             throw new IllegalArgumentException("Value must be of type " + type.getDefaultValue().getClass());
         }
         this.value = (T) value;
+        return this;
     }
 }
