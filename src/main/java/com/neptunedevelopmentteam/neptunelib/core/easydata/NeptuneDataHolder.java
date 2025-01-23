@@ -1,5 +1,9 @@
 package com.neptunedevelopmentteam.neptunelib.core.easydata;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.util.Identifier;
 
@@ -36,5 +40,23 @@ public interface NeptuneDataHolder {
     default <T> void setData(Identifier identifier, T data) {
         if(!map.containsKey(identifier)) throw new RuntimeException("Data type not registered: " + identifier);
         map.computeIfPresent(identifier, (k, val) -> val.setValue(data));
+    }
+
+    default JsonObject getAsJson() {
+        JsonObject root = new JsonObject();
+        for (Map.Entry<Identifier, NeptuneData<?>> entry : map.entrySet()) {
+            JsonElement json_element = entry.getValue().getAsJson();
+            root.add(entry.getKey().toString(), json_element);
+        }
+        return root;
+    }
+
+    default void loadFromJson(JsonObject jsonObject) {
+        for (Map.Entry<Identifier, NeptuneData<?>> entry: map.entrySet()) {
+            JsonElement jsonElement = jsonObject.get(entry.getKey().toString());
+            if (jsonElement != null) {
+                entry.getValue().setValueFromJson(jsonElement);
+            }
+        }
     }
 }

@@ -1,3 +1,6 @@
+# 2.5.1
+- Added saving and loading from JSON with `NeptuneDataHolder`, the saving and loading of the files will have to be implemented by the mod using this library, or maybe in the future there'll be a file saving and loading manager in the future, but who knows.
+
 # 2.5.0
 - Moved PacketCodecs to their own class
 - Made it so you can register custom data types

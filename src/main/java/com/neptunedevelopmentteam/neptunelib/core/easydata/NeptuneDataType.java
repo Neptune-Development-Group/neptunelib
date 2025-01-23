@@ -1,6 +1,7 @@
 package com.neptunedevelopmentteam.neptunelib.core.easydata;
 
 import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.component.ComponentType;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
@@ -8,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class NeptuneDataType<A> {
     private final A default_value;
-    private final Codec codec;
-    private final PacketCodec packetCodec;
+    private final Codec<A> codec;
+    private final PacketCodec<ByteBuf, A> packetCodec;
     private final Boolean isCustom;
     private Identifier identifier = null;
 
@@ -22,7 +23,7 @@ public class NeptuneDataType<A> {
         this.isCustom = false;
     }
 
-    public Codec getCodec() {
+    public Codec<A> getCodec() {
         return codec;
     }
 
@@ -30,7 +31,7 @@ public class NeptuneDataType<A> {
         return isCustom;
     }
 
-    public PacketCodec getPacketCodec() {
+    public PacketCodec<ByteBuf, A> getPacketCodec() {
         return packetCodec;
     }
 

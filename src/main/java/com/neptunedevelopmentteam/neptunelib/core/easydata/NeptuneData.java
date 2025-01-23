@@ -1,5 +1,10 @@
 package com.neptunedevelopmentteam.neptunelib.core.easydata;
 
+import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+
 public class NeptuneData<T> {
 
     private final NeptuneDataType<T> type;
@@ -23,5 +28,17 @@ public class NeptuneData<T> {
         }
         this.value = (T) value;
         return this;
+    }
+
+    public JsonElement getAsJson() {
+        Codec<T> codec = type.getCodec();
+        DataResult<JsonElement> jsonElementDataResult = codec.encodeStart(JsonOps.INSTANCE, value);
+        return jsonElementDataResult.getOrThrow();
+    }
+
+    public void setValueFromJson(JsonElement jsonElement) {
+        Codec<T> codec = type.getCodec();
+        DataResult<T> result = codec.parse(JsonOps.INSTANCE, jsonElement);
+        setValue(result.getOrThrow());
     }
 }
